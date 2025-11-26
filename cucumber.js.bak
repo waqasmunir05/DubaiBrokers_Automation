@@ -1,0 +1,13 @@
+module.exports = {
+  default: {
+    require: ["tests/steps/**/*.ts", "tests/support/hooks.ts"],
+    publishQuiet: true,
+    format: [
+      "progress",
+      "json:reports/cucumber_report.json",
+      "allure-cucumberjs:reports/allure-results"
+    ],
+    paths: ["tests/features/*.feature"],
+    requireModule: ["ts-node/register"],
+  }
+}
