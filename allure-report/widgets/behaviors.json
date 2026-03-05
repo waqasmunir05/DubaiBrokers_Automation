@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"0b5cfa7c4c3e5cbba2d80e595d89df13","name":"Login with Emirates ID","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}},{"uid":"908fc3d2a3c00b3b754ecde023e3f5ca","name":"Login with Username and Password","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}}]}

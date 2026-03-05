@@ -1,0 +1,12 @@
+[
+  {
+    "name": "screenshot",
+    "type": "image/png",
+    "source": "unknown-feature-scenario-1772619138420-screenshot-1772619138420.png"
+  },
+  {
+    "name": "page-source",
+    "type": "text/html",
+    "source": "unknown-feature-scenario-1772619138420-page-1772619138420.html"
+  }
+]

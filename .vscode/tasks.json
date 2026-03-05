@@ -1,0 +1,323 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "phase1-regression-create-flow",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"tests/features/01_Login/02_username.feature",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "phase1-regression-create-tag",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"--tags",
+				"@createContract",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "phase2-lifecycle-regression",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:flow:lifecycle"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "phase3-focused-regression",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:phase3:focused"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "smoke-default-no-reject",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"test"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "baseline-lifecycle-no-reject",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:flow:lifecycle"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "list-failed-scenarios",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"-e",
+				"const fs=require('fs');const p='reports/cucumber_report.json';const data=JSON.parse(fs.readFileSync(p,'utf8'));const failed=[];for(const feature of data){for(const scenario of (feature.elements||[])){const failedStep=(scenario.steps||[]).find(s=>s.result&&s.result.status==='failed');if(failedStep){failed.push({feature:feature.name,scenario:scenario.name,line:scenario.line,step:failedStep.name,error:(failedStep.result.error_message||'').split('\\n')[0]});}}}console.log('FAILED_SCENARIOS='+failed.length);failed.forEach((f,i)=>{console.log(`\\n${i+1}. FEATURE: ${f.feature}`);console.log(`   SCENARIO: ${f.scenario} (line ${f.line})`);console.log(`   STEP: ${f.step}`);console.log(`   ERROR: ${f.error}`);});"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "isolate-create-approve",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"tests/features/01_Login/02_username.feature",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "isolate-create-approve-json",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"tests/features/01_Login/02_username.feature",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_create_approve.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "create-approve-only-tags",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"--tags",
+				"@createContract or @approveContract",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_create_approve_only.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "create-approve-edit-check",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"tests/features/02_ContractA/03_edit_contract.feature",
+				"--tags",
+				"@createContract or @approveContract or @editContract",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-edit-approval-check-now",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"tests/features/02_ContractA/03_edit_contract.feature",
+				"tests/features/02_ContractA/04_approve_edited_contract.feature",
+				"--tags",
+				"@createContract or @approveContract or @editContract or @approveEditedContract",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_edit_approval_check.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "rerun-create-approve-edit-approveEdited",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"tests/features/02_ContractA/03_edit_contract.feature",
+				"tests/features/02_ContractA/04_approve_edited_contract.feature",
+				"--tags",
+				"@createContract or @approveContract or @editContract or @approveEditedContract",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_rerun_edit_approval.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "failfast-edit-approval-run",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"--fail-fast",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"tests/features/02_ContractA/03_edit_contract.feature",
+				"tests/features/02_ContractA/04_approve_edited_contract.feature",
+				"--tags",
+				"@createContract or @approveContract or @editContract or @approveEditedContract",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "test-extend-flow",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"--fail-fast",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"tests/features/02_ContractA/05_extend_contract.feature",
+				"tests/features/02_ContractA/06_approve_extension.feature",
+				"--tags",
+				"@createContract or @approveContract or @extendContract or @approveExtension",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "test-cancel-flow",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"cucumber-js",
+				"--fail-fast",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"tests/features/02_ContractA/07_cancel_contract.feature",
+				"tests/features/02_ContractA/08_approve_cancellation.feature",
+				"--tags",
+				"@createContract or @approveContract or @cancelContract or @approveCancellation",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		}
+	]
+}

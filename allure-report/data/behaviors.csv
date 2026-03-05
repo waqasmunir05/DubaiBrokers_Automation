@@ -1,0 +1,5 @@
+"BROKEN","EPIC","FAILED","FEATURE","PASSED","SKIPPED","STORY","UNKNOWN"
+"0","","0","Login with Emirates ID","1","0","User logs in using Emirates ID and verifies user name","0"
+"0","","0","Login with Username and Password","1","0","User logs in using Username and Password","0"
+"0","","0","Login with Username and Password","1","0","User logs in with invalid password and sees error","0"
+"0","","0","Login with Emirates ID","1","0","User logs in with invalid OTP and sees error","0"
