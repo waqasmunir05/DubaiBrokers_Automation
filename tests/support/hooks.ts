@@ -11,7 +11,7 @@ Before(async function (this: World) {
   await this.initBrowser();
 });
 
-After(async function (this: World, { result }) {
+After({ timeout: 90000 }, async function (this: World, { result }) {
 
   // On failure, capture screenshot and page source into allure-results
   try {
@@ -51,6 +51,11 @@ After(async function (this: World, { result }) {
   } catch (e) {
     const errMsg = (e && (e as any).message) ? (e as any).message : String(e);
     console.error('🟥 Failed to write failure artifacts:', errMsg);
+  }
+
+  // Wait 30 seconds before closing so you can observe the final page state
+  if (this.page) {
+    await this.page.waitForTimeout(30000);
   }
 
   await this.closeBrowser();
