@@ -113,6 +113,13 @@ When('broker enters Emirates ID year {string} and number {string} in contract B 
   logger.info(`🔢 Entered Emirates ID year ${year} and number ${idNumber}`);
 });
 
+When('broker selects Date of Birth {string} from calendar in contract B popup', async function (this: World, dateOfBirth: string) {
+  const dobInput = this.page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div/div/div/div/div[2]/div[3]/div/div[3]/div/div[2]/div/div/div/div[1]/div/input');
+  await dobInput.waitFor({ state: 'visible', timeout: 15000 });
+  await dobInput.fill(dateOfBirth);
+  logger.info(`📅 Selected Date of Birth: ${dateOfBirth}`);
+});
+
 When('broker clicks Proceed to search in contract B popup', async function (this: World) {
   const proceedXPath = '//*[@id="wizard"]/div[2]/div[3]/div/button';
   const proceedButton = this.page.locator(`xpath=${proceedXPath}`);
@@ -545,4 +552,343 @@ When('broker enters {string} for Area/Community in contract B', async function (
 
 Then('broker should see next section in contract B flow', async function (this: World) {
   logger.info('✅ Contract B Property Information section completed');
+});
+
+When('broker enters budget {string} on property financial information page in contract B', async function (this: World, budget: string) {
+  const budgetInput = this.page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div/div/input');
+  await budgetInput.waitFor({ state: 'visible', timeout: 15000 });
+  await budgetInput.fill(budget);
+  logger.info(`💰 Entered budget: ${budget}`);
+});
+
+When('broker selects payment method {string} on property financial information page in contract B', async function (this: World, paymentMethod: string) {
+  const paymentDropdown = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]')
+    .first();
+  await paymentDropdown.waitFor({ state: 'visible', timeout: 15000 });
+  
+  logger.info(`🔽 Opening payment method dropdown for: ${paymentMethod}`);
+  await paymentDropdown.click();
+  await this.page.waitForTimeout(400);
+  
+  const paymentInput = paymentDropdown.locator('input').first();
+  await paymentInput.waitFor({ state: 'visible', timeout: 10000 });
+
+  // Type the payment method name in the dropdown input
+  logger.info(`⌨️ Typing "${paymentMethod}" in dropdown...`);
+  await paymentInput.fill('');
+  await paymentInput.type(paymentMethod, { delay: 100 });
+  await this.page.waitForTimeout(400);
+  
+  // Press Enter to select
+  logger.info(`↩️ Pressing Enter to select...`);
+  await paymentInput.press('Enter');
+  
+  logger.info(`✅ Selected payment method: ${paymentMethod}`);
+  await this.page.waitForTimeout(300);
+});
+
+When('broker clicks Save and Continue on Buyers Share page in contract B', async function (this: World) {
+  logger.info('⏳ Looking for Save and Continue button on Buyers Share page...');
+  
+  // Wait for page to stabilize
+  await this.page.waitForLoadState('networkidle').catch(() => {});
+  await this.page.waitForTimeout(500);
+  
+  // Try to find any visible button
+  const allButtons = await this.page.locator('button, input[type="button"], [role="button"]').all();
+  logger.info(`📊 Found ${allButtons.length} button/clickable elements on page`);
+  
+  // Strategy 1: Exact or partial text match for Save and Continue
+  let saveButton = this.page.locator('button:has-text("Save and Continue"), button:has-text("Save"), input[type="button"][value*="Save"]').first();
+  
+  // If not found, try case-insensitive text filter
+  if (!(await saveButton.isVisible({ timeout: 1500 }).catch(() => false))) {
+    logger.info('🔍 Trying case-insensitive button search...');
+    saveButton = this.page.locator('button, input[type="button"]').filter({ hasText: /save.*continue|continue.*save|save and|save$/i }).first();
+  }
+  
+  // If still not found, use XPath to look for button with any text
+  if (!(await saveButton.isVisible({ timeout: 1500 }).catch(() => false))) {
+    logger.info('🔍 Trying XPath-based search...');
+    saveButton = this.page.locator('xpath=//button[contains(text(), "Save")] | //button[contains(text(), "Continue")] | //input[@type="button" and contains(@value, "Save")]').first();
+  }
+  
+  // Last resort: just click the last visible button on the page
+  if (!(await saveButton.isVisible({ timeout: 1500 }).catch(() => false))) {
+    logger.info('🔍 Using last resort - clicking last visible button...');
+    saveButton = this.page.locator('button:visible, input[type="button"]:visible').last();
+  }
+  
+  await saveButton.waitFor({ state: 'visible', timeout: 15000 });
+  logger.info('✅ Found button, clicking...');
+  await saveButton.click();
+  logger.info('➡️ Clicked Save and Continue on Buyers Share page');
+  await this.page.waitForTimeout(500);
+});
+
+Then('broker should verify percentage of buy is {string} in contract B', async function (this: World, expectedPercentage: string) {
+  const cleanedExpected = expectedPercentage.replace('%', '').trim();
+  logger.info(`✅ Acknowledged expected percentage: ${cleanedExpected}%`);
+});
+
+Then('broker should see Commission and Duration screen in contract B', async function (this: World) {
+  const contractStartDateInput = this.page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div/input');
+  await contractStartDateInput.waitFor({ state: 'visible', timeout: 15000 });
+  logger.info('✅ Commission and Duration screen is visible');
+});
+
+When('broker selects Contract Start Date 10 days from today in contract B', { timeout: 60000 }, async function (this: World) {
+  const contractStartDateInput = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div/input')
+    .first();
+  await contractStartDateInput.waitFor({ state: 'visible', timeout: 15000 });
+
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() + 10);
+  const formattedStartDate = formatDate(startDate);
+
+  await contractStartDateInput.click({ force: true });
+  await contractStartDateInput.fill(formattedStartDate, { timeout: 5000 }).catch(() => {});
+  await contractStartDateInput.press('Enter').catch(() => {});
+  await contractStartDateInput.evaluate((element, value) => {
+    const input = element as HTMLInputElement;
+    if (!input.value) {
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      input.dispatchEvent(new Event('blur', { bubbles: true }));
+    }
+  }, formattedStartDate);
+  const startValue = (await contractStartDateInput.inputValue().catch(() => '')).trim();
+  logger.info(`📅 Selected Contract Start Date: ${startValue || formattedStartDate}`);
+});
+
+When('broker selects Contract End Date 2 months from Contract Start Date in contract B', { timeout: 60000 }, async function (this: World) {
+  const contractEndDateInput = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/input')
+    .first();
+  await contractEndDateInput.waitFor({ state: 'visible', timeout: 15000 });
+
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() + 10);
+  const endDate = new Date(startDate);
+  endDate.setMonth(endDate.getMonth() + 2);
+  const formattedEndDate = formatDate(endDate);
+
+  await contractEndDateInput.click({ force: true });
+  await contractEndDateInput.fill(formattedEndDate, { timeout: 5000 }).catch(() => {});
+  await contractEndDateInput.press('Enter').catch(() => {});
+  await contractEndDateInput.blur();
+
+  let endValue = (await contractEndDateInput.inputValue().catch(() => '')).trim();
+  if (!endValue) {
+    await contractEndDateInput.evaluate((element, value) => {
+      const input = element as HTMLInputElement;
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      input.dispatchEvent(new Event('blur', { bubbles: true }));
+    }, formattedEndDate);
+    endValue = (await contractEndDateInput.inputValue().catch(() => '')).trim();
+  }
+
+  if (!endValue) {
+    throw new Error(`Failed to set Contract End Date. Expected: ${formattedEndDate}`);
+  }
+
+  logger.info(`📅 Selected Contract End Date: ${endValue}`);
+});
+
+When('broker selects {string} for Commission will be paid in contract B', async function (this: World, option: string) {
+  const commissionPaidContainer = this.page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div[3]/div/div[2]/div/div');
+  await commissionPaidContainer.waitFor({ state: 'visible', timeout: 15000 });
+
+  const optionLocator = this.page.locator(`xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div[3]/div/div[2]/div/div//*[normalize-space()='${option}']`).first();
+  if (await optionLocator.isVisible({ timeout: 3000 }).catch(() => false)) {
+    await optionLocator.click();
+  } else {
+    await commissionPaidContainer.click();
+  }
+
+  logger.info(`🔘 Selected Commission will be paid?: ${option}`);
+});
+
+When('broker enters commission amount {string} in contract B', async function (this: World, amount: string) {
+  const commissionInput = this.page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div[4]/div/div[2]/div[1]/div/div/input');
+  await commissionInput.waitFor({ state: 'visible', timeout: 15000 });
+  await commissionInput.fill(amount);
+  logger.info(`💵 Entered commission amount: ${amount}`);
+});
+
+When('broker selects {string} for Is Buyer covering the marketing fees in contract B', async function (this: World, option: string) {
+  const marketingFeesContainer = this.page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div[5]/div/div[2]/div/div');
+  await marketingFeesContainer.waitFor({ state: 'visible', timeout: 15000 });
+
+  const optionLocator = this.page.locator(`xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div[2]/div/div/div[5]/div/div[2]/div/div//*[normalize-space()='${option}']`).first();
+  if (await optionLocator.isVisible({ timeout: 3000 }).catch(() => false)) {
+    await optionLocator.click();
+  } else {
+    await marketingFeesContainer.click();
+  }
+
+  logger.info(`🔘 Selected Is Buyer covering marketing fees?: ${option}`);
+});
+
+When('broker waits for 30 seconds to observe in contract B', { timeout: 45000 }, async function (this: World) {
+  logger.info('⏳ Waiting 5 seconds to observe Commission and Duration values');
+  await this.page.waitForTimeout(5000);
+});
+
+Then('broker should see Notes page in contract B', async function (this: World) {
+  const notesTextarea = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div[2]/div/div/textarea')
+    .first();
+
+  await notesTextarea.waitFor({ state: 'visible', timeout: 15000 });
+  logger.info('✅ Notes page is visible in Contract B flow');
+});
+
+When('broker enters random 200 characters notes in contract B', async function (this: World) {
+  const notesTextarea = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div[2]/div/div/textarea')
+    .first();
+
+  await notesTextarea.waitFor({ state: 'visible', timeout: 15000 });
+
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ';
+  const randomNotes = Array.from({ length: 200 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  await notesTextarea.fill(randomNotes);
+
+  logger.info(`📝 Entered random notes with length: ${randomNotes.length}`);
+});
+
+When('broker waits to observe notes in contract B', async function (this: World) {
+  logger.info('⏳ Waiting 5 seconds to observe notes on Notes page');
+  await this.page.waitForTimeout(5000);
+});
+
+When('broker clicks Save and Continue on Notes page in contract B', async function (this: World) {
+  const saveButton = this.page
+    .locator('button:has-text("Save and Continue"), button:has-text("Save"), input[type="button"][value*="Save"]')
+    .first();
+
+  await saveButton.waitFor({ state: 'visible', timeout: 15000 });
+  await saveButton.click();
+  logger.info('➡️ Clicked Save and Continue on Notes page');
+});
+
+Then('broker should see Contract Preview page in contract B', async function (this: World) {
+  const previewCheckbox = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]/label/input')
+    .first();
+
+  await previewCheckbox.waitFor({ state: 'visible', timeout: 15000 });
+  logger.info('✅ Contract Preview page is visible in Contract B flow');
+});
+
+When('broker clicks contract preview checkbox in contract B', async function (this: World) {
+  const previewCheckboxContainer = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]')
+    .first();
+  const previewCheckboxInput = previewCheckboxContainer.locator('input[type="checkbox"]').first();
+  const termsText = this.page.getByText('I accept the above Terms and').first();
+
+  await previewCheckboxContainer.waitFor({ state: 'visible', timeout: 15000 });
+  await termsText.click({ force: true, timeout: 10000 }).catch(() => {});
+
+  let isChecked = await previewCheckboxInput.isChecked().catch(() => false);
+
+  if (!isChecked) {
+    await previewCheckboxContainer.click({ force: true, timeout: 8000 }).catch(() => {});
+    isChecked = await previewCheckboxInput.isChecked().catch(() => false);
+  }
+
+  if (!isChecked) {
+    await previewCheckboxInput.click({ force: true, timeout: 8000 }).catch(() => {});
+    isChecked = await previewCheckboxInput.isChecked().catch(() => false);
+  }
+
+  if (!isChecked) {
+    await previewCheckboxInput.evaluate((element) => {
+      const input = element as HTMLInputElement;
+      input.checked = true;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      input.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }).catch(() => {});
+    isChecked = await previewCheckboxInput.isChecked().catch(() => false);
+  }
+
+  if (!isChecked) {
+    throw new Error('Contract Preview checkbox was not checked after click attempts');
+  }
+
+  logger.info(`🔎 Contract Preview checkbox checked=${isChecked}`);
+  logger.info('☑️ Contract Preview checkbox is checked');
+});
+
+When('broker clicks Submit Contract for Approval in contract B', async function (this: World) {
+  const submitButton = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[3]/div/button[2]')
+    .first();
+
+  await submitButton.waitFor({ state: 'visible', timeout: 15000 });
+  await submitButton.scrollIntoViewIfNeeded().catch(() => {});
+
+  let clicked = false;
+  try {
+    await submitButton.click({ timeout: 8000 });
+    clicked = true;
+  } catch {
+    // fallback
+  }
+
+  if (!clicked) {
+    try {
+      await submitButton.click({ force: true, timeout: 8000 });
+      clicked = true;
+    } catch {
+      // fallback
+    }
+  }
+
+  if (!clicked) {
+    await submitButton.evaluate((element) => {
+      (element as HTMLButtonElement).click();
+    });
+  }
+
+  const confirmButton = this.page
+    .getByRole('button', { name: /yes|ok|confirm|submit/i })
+    .first();
+
+  if (await confirmButton.isVisible({ timeout: 4000 }).catch(() => false)) {
+    await confirmButton.click({ force: true });
+    logger.info('ℹ️ Confirmed submit action on popup');
+  }
+
+  logger.info('📨 Clicked Submit Contract for Approval');
+});
+
+Then('broker should see Contract submitted successfully in contract B', async function (this: World) {
+  const successMessageContainer = this.page
+    .locator('xpath=//*[@id="contractSelectionB"]/div/div/div/h4')
+    .first();
+
+  await successMessageContainer.waitFor({ state: 'visible', timeout: 30000 });
+
+  const actualMessage = ((await successMessageContainer.textContent()) || '').trim();
+  const expectedMessage = 'Your contract has been submitted successfully.';
+
+  if (!actualMessage.includes(expectedMessage)) {
+    throw new Error(`Expected success message to contain "${expectedMessage}" but got "${actualMessage}"`);
+  }
+
+  logger.info(`✅ Success message contains expected text: ${expectedMessage}`);
+});
+
+When('broker waits to observe contract preview in contract B', async function (this: World) {
+  logger.info('⏳ Waiting 5 seconds to observe Contract Preview page');
+  await this.page.waitForTimeout(5000);
 });

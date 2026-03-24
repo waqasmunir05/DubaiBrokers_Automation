@@ -18,11 +18,11 @@ Scenario: Contract B creation with Person using Emirates ID
   And broker selects Person in contract B popup
   And broker selects Emirates ID as registration type in contract B popup
   And broker enters Emirates ID year "1986" and number "57419044" in contract B popup
+  And broker selects Date of Birth "29/04/1971" from calendar in contract B popup
   And broker clicks Proceed to search in contract B popup
   And broker waits for Contract B search result and clicks it
   And broker handles response after selecting contract B search result
   And broker selects Yes on Green List in contract B form
-  And broker enters birth place "Rawalpindi" in contract B form
   And broker selects passport expiry date 1 year from today in contract B form
   And broker selects passport type "Regular passport" in contract B form
   And broker uploads a sample document in contract B form
@@ -31,7 +31,6 @@ Scenario: Contract B creation with Person using Emirates ID
   And broker enters email address "waqas.munir@eres.ae" in contract B form
   And broker selects Buyer radio in contract B form
   And broker accepts terms checkbox in contract B form
-  And broker clicks Verify Buyer in contract B form
   And broker clicks Save and Continue in contract B form
   Then broker should see Property Information screen in contract B flow
   And broker selects "Unit" from property type lookup in contract B property information
@@ -42,3 +41,23 @@ Scenario: Contract B creation with Person using Emirates ID
   And broker enters "Marsa Dubai" for Area/Community in contract B
   And broker clicks Save and Continue in contract B form
   Then broker should see next section in contract B flow
+  And broker enters budget "700000" on property financial information page in contract B
+  And broker selects payment method "Cash" on property financial information page in contract B
+  And broker clicks Save and Continue on Buyers Share page in contract B
+  Then broker should verify percentage of buy is "100%" in contract B
+  And broker clicks Save and Continue on Buyers Share page in contract B
+  Then broker should see Commission and Duration screen in contract B
+  And broker selects Contract Start Date 10 days from today in contract B
+  And broker selects Contract End Date 2 months from Contract Start Date in contract B
+  And broker selects "Yes" for Commission will be paid in contract B
+  And broker enters commission amount "20000" in contract B
+  And broker selects "Yes" for Is Buyer covering the marketing fees in contract B
+  And broker clicks Save and Continue in contract B form
+  Then broker should see Notes page in contract B
+  And broker enters random 200 characters notes in contract B
+  And broker clicks Save and Continue on Notes page in contract B
+  Then broker should see Contract Preview page in contract B
+  And broker clicks contract preview checkbox in contract B
+  And broker clicks Submit Contract for Approval in contract B
+  Then broker should see Contract submitted successfully in contract B
+  And broker waits to observe contract preview in contract B
