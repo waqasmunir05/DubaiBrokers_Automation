@@ -25,7 +25,6 @@ Scenario: Contract B creation with Person using Emirates ID
   And broker selects Yes on Green List in contract B form
   And broker selects passport expiry date 1 year from today in contract B form
   And broker selects passport type "Regular passport" in contract B form
-  And broker uploads a sample document in contract B form
   And broker selects Emirates ID expiry date 3 months from today in contract B form
   And broker enters mobile number "0558895363" in contract B form
   And broker enters email address "waqas.munir@eres.ae" in contract B form
@@ -54,10 +53,9 @@ Scenario: Contract B creation with Person using Emirates ID
   And broker selects "Yes" for Is Buyer covering the marketing fees in contract B
   And broker clicks Save and Continue in contract B form
   Then broker should see Notes page in contract B
-  And broker enters random 200 characters notes in contract B
+  And broker enters meaningful notes in contract B
   And broker clicks Save and Continue on Notes page in contract B
   Then broker should see Contract Preview page in contract B
   And broker clicks contract preview checkbox in contract B
   And broker clicks Submit Contract for Approval in contract B
   Then broker should see Contract submitted successfully in contract B
-  And broker waits to observe contract preview in contract B

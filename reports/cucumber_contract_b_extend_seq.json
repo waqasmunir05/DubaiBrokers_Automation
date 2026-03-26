@@ -1,0 +1,275 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "contract-b---extend-contract-request;broker-requests-contract-b-extension",
+        "keyword": "Scenario",
+        "line": 13,
+        "name": "Broker Requests Contract B Extension",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1495159499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "I open the DLD login page",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 419442099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "I select \"Username\" login option",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 844098499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "I enter username \"majed.1015\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 292012200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "I enter password \"654321\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 51264499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "I click on \"Login\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:55"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 85882799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 10,
+            "name": "I should see logged-in username as \"MAJED AHMAD MAJED SAIF ALMHEIRI\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:108"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 425093399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 14,
+            "name": "I land on the dashboard",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:100"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1819999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "I click on \"Contracts\" tab",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 229963099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "I close the popup message",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:196"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 758285299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "broker enters the created Contract B number",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 30662000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "broker clicks on Search button to find contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:42"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5326883700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "broker clicks on searched Contract B result",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 29992899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "broker clicks on contract to view details in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\extend_contract_b.steps.ts:12"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 7707800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "broker clicks on extend action icon in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\extend_contract_b.steps.ts:29"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2893924700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "broker selects new Contract B End date 3 months from today",
+            "match": {
+              "location": "tests\\steps\\ContractB\\extend_contract_b.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 61654200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 23,
+            "name": "broker clicks on Continue button for Contract B extension",
+            "match": {
+              "location": "tests\\steps\\ContractB\\extend_contract_b.steps.ts:96"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 57808300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 24,
+            "name": "broker should see Contract B extension request success message",
+            "match": {
+              "location": "tests\\steps\\ContractB\\extend_contract_b.steps.ts:108"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 867259899
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 780442600
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@contractB",
+            "line": 1
+          },
+          {
+            "name": "@extendContractB",
+            "line": 12
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "contract-b---extend-contract-request",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Contract B - Extend Contract Request",
+    "tags": [
+      {
+        "name": "@contractB",
+        "line": 1
+      }
+    ],
+    "uri": "tests\\features\\03_ContractB\\05_extend_contract_b.feature"
+  }
+]

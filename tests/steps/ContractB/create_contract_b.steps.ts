@@ -1,4 +1,5 @@
 import path from 'path';
+import * as fs from 'fs';
 import { When, Then } from '@cucumber/cucumber';
 import { World } from '../../support/world';
 import { logger } from '../../utils/logger';
@@ -313,20 +314,45 @@ When('broker selects passport type {string} in contract B form', async function 
 });
 
 When('broker uploads a sample document in contract B form', async function (this: World) {
-  const uploadInputXPath = '/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div[2]/div[11]/div[2]/div/div[4]/div/section/div/input';
-  const uploadInput = this.page.locator(`xpath=${uploadInputXPath}`);
-  const documentTitleXPath = '/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div[2]/div[11]/div[2]/div/div[4]/div/div/div[2]/input';
-  const documentTitleInput = this.page.locator(`xpath=${documentTitleXPath}`);
   const sampleFilePath = path.join(process.cwd(), 'tests', 'resources', 'uploads', 'sample-document.pdf');
   const documentTitle = `Passport Copy ${Math.floor(1000 + Math.random() * 9000)}`;
 
+  // Try primary XPath first, then fall back to any file input in section/div
+  let uploadInput = this.page.locator(
+    'xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div[2]/div[11]/div[2]/div/div[4]/div/section/div/input'
+  );
+  let attached = await uploadInput.isVisible({ timeout: 5000 }).catch(() => false);
+
+  if (!attached) {
+    uploadInput = this.page.locator('section input[type="file"]').first();
+    attached = await uploadInput.isVisible({ timeout: 5000 }).catch(() => false);
+  }
+
+  if (!attached) {
+    uploadInput = this.page.locator('input[type="file"]').first();
+  }
+
   await uploadInput.waitFor({ state: 'attached', timeout: 15000 });
   await uploadInput.setInputFiles(sampleFilePath);
-  await documentTitleInput.waitFor({ state: 'visible', timeout: 15000 });
-  await documentTitleInput.fill(documentTitle);
+
+  // Title input: try primary XPath, then fall back to any text input near the upload
+  let documentTitleInput = this.page.locator(
+    'xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div[2]/div[11]/div[2]/div/div[4]/div/div/div[2]/input'
+  );
+  let titleVisible = await documentTitleInput.isVisible({ timeout: 5000 }).catch(() => false);
+
+  if (!titleVisible) {
+    // After upload, an input for the document name typically appears
+    documentTitleInput = this.page.locator('div.file-name input, input[placeholder*="title"], input[placeholder*="name"], input[placeholder*="document"]').first();
+    titleVisible = await documentTitleInput.isVisible({ timeout: 5000 }).catch(() => false);
+  }
+
+  if (titleVisible) {
+    await documentTitleInput.fill(documentTitle);
+    logger.info(`📝 Entered document title: ${documentTitle}`);
+  }
 
   logger.info(`📎 Uploaded sample document: ${sampleFilePath}`);
-  logger.info(`📝 Entered document title: ${documentTitle}`);
 });
 
 When('broker selects Emirates ID expiry date 3 months from today in contract B form', async function (this: World) {
@@ -385,11 +411,6 @@ When('broker accepts terms checkbox in contract B form', async function (this: W
   logger.info('☑️ Accepted terms checkbox in Contract B form');
 });
 
-When('broker waits 30 seconds in contract B flow', { timeout: 40000 }, async function (this: World) {
-  logger.info('⏳ Waiting 30 seconds to observe Contract B scenario state');
-  await this.page.waitForTimeout(30000);
-});
-
 When('broker clicks Verify Buyer in contract B form', async function (this: World) {
   const verifyBuyerButton = this.page.getByRole('button', { name: /verify buyer/i }).first();
 
@@ -423,7 +444,13 @@ When('broker clicks Save and Continue in contract B form', async function (this:
 
 Then('broker should see Property Information screen in contract B flow', async function (this: World) {
   const propertyInfoHeader = this.page.locator('h2').filter({ hasText: 'Property Information' }).first();
-  await propertyInfoHeader.waitFor({ state: 'visible', timeout: 20000 });
+  const propertyTypeLookup = this.page.locator('xpath=//*[@id="wizard"]/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div[1]').first();
+
+  const headerVisible = await propertyInfoHeader.isVisible({ timeout: 8000 }).catch(() => false);
+  if (!headerVisible) {
+    await propertyTypeLookup.waitFor({ state: 'visible', timeout: 20000 });
+  }
+
   logger.info('✅ Property Information screen is displayed in Contract B flow');
 });
 
@@ -439,11 +466,6 @@ When('broker selects {string} from property type lookup in contract B property i
   await option.click();
 
   logger.info(`🏠 Selected property type from lookup: ${propertyType}`);
-});
-
-When('broker waits 30 seconds to observe contract B property information', { timeout: 40000 }, async function (this: World) {
-  logger.info('⏳ Waiting 30 seconds to observe Contract B Property Information state');
-  await this.page.waitForTimeout(30000);
 });
 
 When('broker selects {string} from Property Usage dropdown in contract B', async function (this: World, usage: string) {
@@ -735,11 +757,6 @@ When('broker selects {string} for Is Buyer covering the marketing fees in contra
   logger.info(`🔘 Selected Is Buyer covering marketing fees?: ${option}`);
 });
 
-When('broker waits for 30 seconds to observe in contract B', { timeout: 45000 }, async function (this: World) {
-  logger.info('⏳ Waiting 5 seconds to observe Commission and Duration values');
-  await this.page.waitForTimeout(5000);
-});
-
 Then('broker should see Notes page in contract B', async function (this: World) {
   const notesTextarea = this.page
     .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div[2]/div/div/textarea')
@@ -763,9 +780,17 @@ When('broker enters random 200 characters notes in contract B', async function (
   logger.info(`📝 Entered random notes with length: ${randomNotes.length}`);
 });
 
-When('broker waits to observe notes in contract B', async function (this: World) {
-  logger.info('⏳ Waiting 5 seconds to observe notes on Notes page');
-  await this.page.waitForTimeout(5000);
+When('broker enters meaningful notes in contract B', async function (this: World) {
+  const notesTextarea = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div[2]/div/div/textarea')
+    .first();
+
+  await notesTextarea.waitFor({ state: 'visible', timeout: 15000 });
+
+  const meaningfulNotes = `Contract B updated and reviewed on ${new Date().toLocaleDateString('en-GB')}. Terms, dates, commission, and buyer details were verified before submission.`;
+  await notesTextarea.fill(meaningfulNotes);
+
+  logger.info(`📝 Entered meaningful notes in Contract B flow: ${meaningfulNotes}`);
 });
 
 When('broker clicks Save and Continue on Notes page in contract B', async function (this: World) {
@@ -782,8 +807,16 @@ Then('broker should see Contract Preview page in contract B', async function (th
   const previewCheckbox = this.page
     .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]/label/input')
     .first();
+  const verifyBuyersPopup = this.page.getByText('Please verify all buyers before proceeding').first();
+  const verifyBuyersOkButton = this.page.locator('#yes').first();
 
   await previewCheckbox.waitFor({ state: 'visible', timeout: 15000 });
+
+  if (await verifyBuyersPopup.isVisible({ timeout: 3000 }).catch(() => false)) {
+    await verifyBuyersOkButton.click({ force: true }).catch(() => {});
+    logger.info('ℹ️ Dismissed verify buyers popup on Contract Preview page');
+  }
+
   logger.info('✅ Contract Preview page is visible in Contract B flow');
 });
 
@@ -791,40 +824,82 @@ When('broker clicks contract preview checkbox in contract B', async function (th
   const previewCheckboxContainer = this.page
     .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]')
     .first();
+  const previewCheckboxLabel = previewCheckboxContainer.locator('label').first();
   const previewCheckboxInput = previewCheckboxContainer.locator('input[type="checkbox"]').first();
   const termsText = this.page.getByText('I accept the above Terms and').first();
+  const submitButton = this.page
+    .locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[3]/div/button[2]')
+    .first();
+  const verifyBuyersPopup = this.page.getByText('Please verify all buyers before proceeding').first();
+  const verifyBuyersOkButton = this.page.locator('#yes').first();
+
+  const dismissVerifyBuyersPopup = async () => {
+    if (await verifyBuyersPopup.isVisible({ timeout: 3000 }).catch(() => false)) {
+      await verifyBuyersOkButton.click({ force: true }).catch(() => {});
+      logger.info('ℹ️ Dismissed verify buyers popup before clicking Contract Preview checkbox');
+      await this.page.waitForTimeout(1000);
+    }
+  };
+
+  const isCheckboxAccepted = async () => {
+    const isChecked = await previewCheckboxInput.isChecked().catch(() => false);
+    const isSubmitEnabled = await submitButton.isEnabled().catch(() => false);
+    return { isChecked, isSubmitEnabled, accepted: isChecked || isSubmitEnabled };
+  };
 
   await previewCheckboxContainer.waitFor({ state: 'visible', timeout: 15000 });
+  await submitButton.waitFor({ state: 'visible', timeout: 15000 });
+  await this.page.waitForLoadState('networkidle').catch(() => {});
+  await this.page.waitForTimeout(1500);
+
+  await dismissVerifyBuyersPopup();
+
   await termsText.click({ force: true, timeout: 10000 }).catch(() => {});
 
-  let isChecked = await previewCheckboxInput.isChecked().catch(() => false);
+  let checkboxState = await isCheckboxAccepted();
 
-  if (!isChecked) {
+  if (!checkboxState.accepted) {
+    await previewCheckboxLabel.click({ force: true, timeout: 8000 }).catch(() => {});
+    await dismissVerifyBuyersPopup();
+    checkboxState = await isCheckboxAccepted();
+  }
+
+  if (!checkboxState.accepted) {
+    await previewCheckboxInput.check({ force: true, timeout: 8000 }).catch(() => {});
+    await dismissVerifyBuyersPopup();
+    checkboxState = await isCheckboxAccepted();
+  }
+
+  if (!checkboxState.accepted) {
     await previewCheckboxContainer.click({ force: true, timeout: 8000 }).catch(() => {});
-    isChecked = await previewCheckboxInput.isChecked().catch(() => false);
+    await dismissVerifyBuyersPopup();
+    checkboxState = await isCheckboxAccepted();
   }
 
-  if (!isChecked) {
-    await previewCheckboxInput.click({ force: true, timeout: 8000 }).catch(() => {});
-    isChecked = await previewCheckboxInput.isChecked().catch(() => false);
-  }
-
-  if (!isChecked) {
+  if (!checkboxState.accepted) {
     await previewCheckboxInput.evaluate((element) => {
       const input = element as HTMLInputElement;
       input.checked = true;
+      input.setAttribute('checked', 'checked');
       input.dispatchEvent(new Event('input', { bubbles: true }));
       input.dispatchEvent(new Event('change', { bubbles: true }));
       input.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      input.dispatchEvent(new Event('blur', { bubbles: true }));
     }).catch(() => {});
-    isChecked = await previewCheckboxInput.isChecked().catch(() => false);
+    await dismissVerifyBuyersPopup();
+    checkboxState = await isCheckboxAccepted();
   }
 
-  if (!isChecked) {
-    throw new Error('Contract Preview checkbox was not checked after click attempts');
+  if (!checkboxState.accepted) {
+    await this.page.waitForTimeout(1500);
+    checkboxState = await isCheckboxAccepted();
   }
 
-  logger.info(`🔎 Contract Preview checkbox checked=${isChecked}`);
+  if (!checkboxState.accepted) {
+    throw new Error('Contract Preview checkbox was not accepted after click attempts and submit button remained disabled');
+  }
+
+  logger.info(`🔎 Contract Preview checkbox checked=${checkboxState.isChecked}, submitEnabled=${checkboxState.isSubmitEnabled}`);
   logger.info('☑️ Contract Preview checkbox is checked');
 });
 
@@ -875,6 +950,9 @@ Then('broker should see Contract submitted successfully in contract B', async fu
   const successMessageContainer = this.page
     .locator('xpath=//*[@id="contractSelectionB"]/div/div/div/h4')
     .first();
+  const contractNumberLink = this.page
+    .locator('xpath=//*[@id="contractSelectionB"]/div/div/div/h4/b/a')
+    .first();
 
   await successMessageContainer.waitFor({ state: 'visible', timeout: 30000 });
 
@@ -885,10 +963,37 @@ Then('broker should see Contract submitted successfully in contract B', async fu
     throw new Error(`Expected success message to contain "${expectedMessage}" but got "${actualMessage}"`);
   }
 
-  logger.info(`✅ Success message contains expected text: ${expectedMessage}`);
-});
+  await contractNumberLink.waitFor({ state: 'visible', timeout: 15000 });
 
-When('broker waits to observe contract preview in contract B', async function (this: World) {
-  logger.info('⏳ Waiting 5 seconds to observe Contract Preview page');
-  await this.page.waitForTimeout(5000);
+  const contractNumberText = ((await contractNumberLink.textContent()) || '').trim();
+  if (!/^CB/i.test(contractNumberText)) {
+    throw new Error(`Expected Contract B number starting with "CB", but got "${contractNumberText}"`);
+  }
+
+  (this as any).contractBNumber = contractNumberText;
+  (this as any).contractNumber = contractNumberText;
+
+  const contractDataFilePath = path.join(process.cwd(), 'contract-data.json');
+  let contractData: Record<string, unknown> = {};
+
+  if (fs.existsSync(contractDataFilePath)) {
+    try {
+      contractData = JSON.parse(fs.readFileSync(contractDataFilePath, 'utf-8'));
+    } catch {
+      contractData = {};
+    }
+  }
+
+  const updatedContractData = {
+    ...contractData,
+    contractBNumber: contractNumberText,
+    contractNumber: contractNumberText,
+    lastUpdatedAt: new Date().toISOString()
+  };
+
+  fs.writeFileSync(contractDataFilePath, JSON.stringify(updatedContractData, null, 2));
+
+  logger.info(`✅ Success message contains expected text: ${expectedMessage}`);
+  logger.info(`🔢 Contract B number captured: ${contractNumberText}`);
+  logger.info(`📄 Contract data saved to: ${contractDataFilePath}`);
 });

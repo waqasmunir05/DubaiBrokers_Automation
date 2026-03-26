@@ -4,7 +4,7 @@
 		{
 			"label": "phase1-regression-create-flow",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"tests/features/01_Login/02_username.feature",
@@ -20,12 +20,20 @@
 				"--format",
 				"progress"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "phase1-regression-create-tag",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"--tags",
@@ -41,7 +49,15 @@
 				"--format",
 				"progress"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "phase2-lifecycle-regression",
@@ -51,7 +67,15 @@
 				"run",
 				"test:flow:lifecycle"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "phase3-focused-regression",
@@ -61,7 +85,15 @@
 				"run",
 				"test:phase3:focused"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "smoke-default-no-reject",
@@ -70,7 +102,15 @@
 			"args": [
 				"test"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "baseline-lifecycle-no-reject",
@@ -80,7 +120,15 @@
 				"run",
 				"test:flow:lifecycle"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "list-failed-scenarios",
@@ -90,12 +138,20 @@
 				"-e",
 				"const fs=require('fs');const p='reports/cucumber_report.json';const data=JSON.parse(fs.readFileSync(p,'utf8'));const failed=[];for(const feature of data){for(const scenario of (feature.elements||[])){const failedStep=(scenario.steps||[]).find(s=>s.result&&s.result.status==='failed');if(failedStep){failed.push({feature:feature.name,scenario:scenario.name,line:scenario.line,step:failedStep.name,error:(failedStep.result.error_message||'').split('\\n')[0]});}}}console.log('FAILED_SCENARIOS='+failed.length);failed.forEach((f,i)=>{console.log(`\\n${i+1}. FEATURE: ${f.feature}`);console.log(`   SCENARIO: ${f.scenario} (line ${f.line})`);console.log(`   STEP: ${f.step}`);console.log(`   ERROR: ${f.error}`);});"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "isolate-create-approve",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"tests/features/01_Login/02_username.feature",
@@ -112,12 +168,20 @@
 				"--format",
 				"progress"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "isolate-create-approve-json",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"tests/features/01_Login/02_username.feature",
@@ -136,12 +200,20 @@
 				"--format",
 				"json:reports/cucumber_create_approve.json"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "create-approve-only-tags",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"tests/features/02_ContractA/01_create_contract.feature",
@@ -161,12 +233,20 @@
 				"--format",
 				"json:reports/cucumber_create_approve_only.json"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "create-approve-edit-check",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"tests/features/02_ContractA/01_create_contract.feature",
@@ -185,12 +265,20 @@
 				"--format",
 				"progress"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "run-edit-approval-check-now",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"tests/features/02_ContractA/01_create_contract.feature",
@@ -212,12 +300,20 @@
 				"--format",
 				"json:reports/cucumber_edit_approval_check.json"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "rerun-create-approve-edit-approveEdited",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"tests/features/02_ContractA/01_create_contract.feature",
@@ -239,12 +335,20 @@
 				"--format",
 				"json:reports/cucumber_rerun_edit_approval.json"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "failfast-edit-approval-run",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"--fail-fast",
@@ -265,12 +369,20 @@
 				"--format",
 				"progress"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "test-extend-flow",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"--fail-fast",
@@ -291,12 +403,20 @@
 				"--format",
 				"progress"
 			],
-			"isBackground": false
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
 		},
 		{
 			"label": "test-cancel-flow",
 			"type": "shell",
-			"command": "npx",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
 			"args": [
 				"cucumber-js",
 				"--fail-fast",
@@ -317,7 +437,1326 @@
 				"--format",
 				"progress"
 			],
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
+		},
+		{
+			"label": "git-status-after-reset",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
+		},
+		{
+			"label": "contract-b-create-only",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			}
+		},
+		{
+			"label": "run-contract-b-property-steps",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"test",
+				"--",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB"
+			],
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-property-steps-rerun",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "rerun-contract-b-createContractB",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"group": "test"
+		},
+		{
+			"label": "rerun-contract-b-createContractB-xpath-usage",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-updated-flow",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"group": "test"
+		},
+		{
+			"label": "git-status-check",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"branch",
+				"--show-current"
+			],
 			"isBackground": false
+		},
+		{
+			"label": "git-status-short",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-add-contract-b-files",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"add",
+				".vscode/tasks.json",
+				"tests/support/hooks.ts",
+				"tests/features/03_ContractB",
+				"tests/resources",
+				"tests/steps/ContractB",
+				"tests/utils/run-cucumber-task.cmd"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-status-after-add",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-commit-contract-b-only",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"commit",
+				"-m",
+				"feat(contract-b): add create contract B automation flow",
+				"--",
+				"tests/support/hooks.ts",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"tests/resources/uploads/README.md",
+				"tests/resources/uploads/sample-document.pdf",
+				"tests/steps/ContractB/create_contract_b.steps.ts",
+				"tests/utils/run-cucumber-task.cmd"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-push-contract-b",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"push",
+				"origin",
+				"feat/create-contract-b"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-b-session-dry-run",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"--dry-run",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "test-session-token-contract-b",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"--tags",
+				"@sessionTokenSliding10m or @sessionTokenMax20m",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "test-session-token-renew-then-expire",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"--tags",
+				"@sessionTokenSlidingRenewalMax20m",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "test-session-token-renew-then-expire",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"--tags",
+				"@sessionTokenSlidingRenewalMax20m",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "test-session-token-renew-then-expire",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"--tags",
+				"@sessionTokenSlidingRenewalMax20m",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "show-last-session-run-output",
+			"type": "shell",
+			"command": "Get-Content",
+			"args": [
+				"-Path",
+				"reports\\cucumber_report.json",
+				"-Tail",
+				"20"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-status-session-update",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-commit-session-feature",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"commit",
+				"-m",
+				"test(contract-b): validate session timeout on emirates id search",
+				"--",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"tests/steps/ContractB/session_token_contract_b.steps.ts"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-add-session-files",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"add",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"tests/steps/ContractB/session_token_contract_b.steps.ts"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "test-session-token-renew-then-expire",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"--tags",
+				"@sessionTokenSlidingRenewalMax20m",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-b-session-disabled-dry-run",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"--dry-run",
+				"tests/features/03_ContractB/03_session_token_disabled_contract_b.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-session-token-disabled-real",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/03_session_token_disabled_contract_b.feature",
+				"--tags",
+				"@sessionTokenDisabledNoExpiryAfter20m",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-unstage-all-temp",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"restore",
+				"--staged",
+				"."
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-stage-session-move-temp",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"add",
+				"tests/features/04_Sessions/01_session_token_validation.feature",
+				"tests/features/04_Sessions/02_session_token_disabled.feature",
+				"tests/steps/Session/session_token.steps.ts",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"tests/features/03_ContractB/03_session_token_disabled_contract_b.feature",
+				"tests/steps/ContractB/session_token_contract_b.steps.ts"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-stage-session-move-A-temp",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"add",
+				"-A",
+				"tests/features/04_Sessions",
+				"tests/steps/Session",
+				"tests/features/03_ContractB/02_session_token_contract_b.feature",
+				"tests/features/03_ContractB/03_session_token_disabled_contract_b.feature",
+				"tests/steps/ContractB/session_token_contract_b.steps.ts"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-a-full-suite",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"tests/features/02_ContractA/03_edit_contract.feature",
+				"tests/features/02_ContractA/04_approve_edited_contract.feature",
+				"tests/features/02_ContractA/05_extend_contract.feature",
+				"tests/features/02_ContractA/06_approve_extension.feature",
+				"tests/features/02_ContractA/07_cancel_contract.feature",
+				"tests/features/02_ContractA/08_approve_cancellation.feature",
+				"tests/features/02_ContractA/10_negative_create_contract.feature",
+				"--tags",
+				"@createContract or @approveContract or @editContract or @approveEditedContract or @extendContract or @approveExtension or @cancelContract or @approveCancellation or @negativeCreateContract",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_a_full_suite.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "launch-playwright-inspector",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"playwright",
+				"codegen",
+				"https://trakheesiqa.dubailand.gov.ae/DubaiBrokers/#/login"
+			],
+			"isBackground": true
+		},
+		{
+			"label": "commit-contract-b-clean",
+			"type": "shell",
+			"command": "git restore --staged .; git add tests/features/03_ContractB/01_create_contract_b.feature tests/steps/ContractB/create_contract_b.steps.ts; git commit -m \"feat(contract-b): complete create contract B flow\"",
+			"isBackground": false
+		},
+		{
+			"label": "commit-contract-b-clean-cmd",
+			"type": "shell",
+			"command": "git restore --staged -- . & git add tests/features/03_ContractB/01_create_contract_b.feature tests/steps/ContractB/create_contract_b.steps.ts & git commit -m \"feat(contract-b): complete create contract B flow\"",
+			"isBackground": false
+		},
+		{
+			"label": "push-contract-b-branch",
+			"type": "shell",
+			"command": "git push origin feat/create-contract-b",
+			"isBackground": false
+		},
+		{
+			"label": "verify-contract-b-push",
+			"type": "shell",
+			"command": "git status -sb",
+			"isBackground": false
+		},
+		{
+			"label": "verify-remote-head-contract-b",
+			"type": "shell",
+			"command": "git rev-parse HEAD & git ls-remote origin refs/heads/feat/create-contract-b",
+			"isBackground": false
+		},
+		{
+			"label": "run-contract-b-updated-flow-now",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-after-popup-fix",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-save-number",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-flow",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-flow-rerun",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-flow-rerun",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-flow-rerun-2",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-after-search-fix",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "show-last-approval-artifacts",
+			"type": "shell",
+			"command": "powershell -NoProfile -Command \"Get-ChildItem 'allure-results/unknown-feature-scenario-*' | Sort-Object LastWriteTime -Descending | Select-Object -First 10 Name,LastWriteTime | Format-Table -AutoSize\"",
+			"isBackground": false
+		},
+		{
+			"label": "show-last-approval-artifacts-cmd",
+			"type": "shell",
+			"command": "cmd /d /c dir /o-d /tw allure-results\\unknown-feature-scenario-*",
+			"isBackground": false
+		},
+		{
+			"label": "run-contract-b-approval-after-refill-fix",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-after-link-fix",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-after-url-fix",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-after-link-fix",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-after-fresh-create",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@createContractB or @approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_create_and_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-create-rerun-now",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-approval-rerun-now",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-b-approval-after-fresh-create",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@createContractB or @approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_create_and_approval.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-edit-and-approve-edited",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/03_ContractB/03_edit_contract_b.feature",
+				"tests/features/03_ContractB/04_approve_edited_contract_b.feature",
+				"--tags",
+				"@editContractB or @approveEditedContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_edit_and_approve_edited.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-edit-and-approve-edited",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/03_ContractB/03_edit_contract_b.feature",
+				"tests/features/03_ContractB/04_approve_edited_contract_b.feature",
+				"--tags",
+				"@editContractB or @approveEditedContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_edit_and_approve_edited.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-edit-approval-check-now",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/03_edit_contract_b.feature",
+				"tests/features/03_ContractB/04_approve_edited_contract_b.feature",
+				"--tags",
+				"@editContractB or @approveEditedContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_edit_and_approve_edited.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-edit-only",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/03_edit_contract_b.feature",
+				"--tags",
+				"@editContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_edit_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-extend-only",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/05_extend_contract_b.feature",
+				"--tags",
+				"@extendContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_extend_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-seq-create",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/01_create_contract_b.feature",
+				"--tags",
+				"@createContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_create_seq.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-seq-approve",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/02_approve_contract_b.feature",
+				"--tags",
+				"@approveContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approve_seq.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-seq-extend",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"--fail-fast",
+				"tests/features/03_ContractB/05_extend_contract_b.feature",
+				"--tags",
+				"@extendContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_extend_seq.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-seq-approve-extension",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd",
+			"args": [
+				"cucumber-js",
+				"tests/features/03_ContractB/06_approve_extension_contract_b.feature",
+				"--tags",
+				"@approveExtensionContractB",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_b_approve_extension_seq.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-extension-lifecycle-safe",
+			"type": "shell",
+			"command": "tests\\utils\\run-contract-b-extension-lifecycle.cmd",
+			"args": [],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "allure-generate-now",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"allure:generate"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "allure-open-now",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"allure:open"
+			],
+			"isBackground": true,
+			"group": "test"
+		},
+		{
+			"label": "git-status-branch-now",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short",
+				"--branch"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "git-add-all-now",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"add",
+				"-A"
+			],
+			"isBackground": false,
+			"group": "test"
 		}
 	]
 }

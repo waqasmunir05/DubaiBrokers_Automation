@@ -133,7 +133,7 @@ Then('I should see invalid owner information error message', async function (thi
   await errorMessage.waitFor({ state: 'visible', timeout: 15000 });
   const messageText = (await errorMessage.textContent())?.trim();
 
-  const expectedMessage = 'INVALID_OWNER_INFORMATION';
+  const expectedMessage = 'The current ownership details of the property do not match those in the contract. Please create a new contract using the latest Title Deed and owner information. The property owner can download the updated Title Deed from their Property Wallet in the Dubai REST App.';
   if (!messageText?.includes(expectedMessage)) {
     throw new Error(`Expected error: "${expectedMessage}". Actual: "${messageText}"`);
   }

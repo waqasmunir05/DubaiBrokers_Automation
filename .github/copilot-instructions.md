@@ -109,7 +109,7 @@ Then('I should see logged in username {string}', async function (this: World, ex
 ### 5. **Feature File Convention**
 - Use `Scenario Outline` with `Examples` tables for data-driven tests
 - Parameters in step definitions use `{string}` syntax for quoted arguments
-- Example: [tests/features/login_emirates_id.feature](tests/features/login_emirates_id.feature)
+- Example: [tests/features/01_Login/01_emirates_id.feature](tests/features/01_Login/01_emirates_id.feature)
 
 ## Important Files
 
@@ -133,4 +133,4 @@ Then('I should see logged in username {string}', async function (this: World, ex
 2. **Add visual locators**: Create shared locator constants or helper methods
 3. **Parallel execution**: Add Cucumber parallel plugin config
 4. **Screenshots on failure**: Extend hooks to capture screen on error
-5. **Username login feature**: Implement [tests/features/login_username.feature](tests/features/login_username.feature) steps
+5. **Username login feature**: Implement [tests/features/01_Login/02_username.feature](tests/features/01_Login/02_username.feature) steps

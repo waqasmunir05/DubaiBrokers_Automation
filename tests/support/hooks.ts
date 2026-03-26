@@ -53,10 +53,5 @@ After({ timeout: 90000 }, async function (this: World, { result }) {
     console.error('🟥 Failed to write failure artifacts:', errMsg);
   }
 
-  // Wait 30 seconds before closing so you can observe the final page state
-  if (this.page) {
-    await this.page.waitForTimeout(30000);
-  }
-
   await this.closeBrowser();
 });

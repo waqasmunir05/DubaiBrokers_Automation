@@ -173,7 +173,7 @@ export class ContractDetailsPage {
   }
 
   // Approval/Edit link extraction
-  async getApprovalLink(): Promise<string> {
+  async getApprovalLink(fallbackXPath?: string): Promise<string> {
     logger.info('📄 Waiting for approval link to load');
     await waitForPageStable(this.page, 15000);
 
@@ -217,12 +217,26 @@ export class ContractDetailsPage {
       return latestTextLink;
     }
 
-    const fallbackXPath = '/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div/div[3]/div/div[3]/div/div[2]/div/div[1]/div[1]/div[2]/div/div[1]';
-    const fallbackElement = this.page.locator(`xpath=${fallbackXPath}`);
+    const resolvedFallbackXPath = fallbackXPath || '/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div/div[3]/div/div[3]/div/div[2]/div/div[1]/div[1]/div[2]/div/div[1]';
+    const fallbackElement = this.page.locator(`xpath=${resolvedFallbackXPath}`);
     await fallbackElement.waitFor({ state: 'attached', timeout: 15000 });
     let fallbackLink = await fallbackElement.getAttribute('href');
     if (!fallbackLink) {
-      fallbackLink = await fallbackElement.textContent();
+      fallbackLink = await fallbackElement.evaluate((element) => {
+        const anchor =
+          (element instanceof HTMLAnchorElement ? element : null) ||
+          element.querySelector('a') ||
+          element.closest('a');
+
+        return (
+          anchor?.getAttribute('href') ||
+          anchor?.textContent ||
+          element.getAttribute('href') ||
+          element.getAttribute('data-href') ||
+          element.textContent ||
+          ''
+        );
+      });
     }
 
     const extractedFallbackLink = this.sanitizeApprovalLink(fallbackLink?.trim() || '');
