@@ -1,1 +1,1 @@
-{"reportName":"DubaiBrokers Automation","testRuns":[],"statistic":{"failed":0,"broken":0,"skipped":0,"passed":4,"unknown":0,"total":4},"time":{"start":1770193089532,"stop":1770193090538,"duration":1006,"minDuration":1000,"maxDuration":1000,"sumDuration":4000}}
+{"reportName":"Allure Report","testRuns":[],"statistic":{"failed":0,"broken":0,"skipped":0,"passed":4,"unknown":0,"total":4},"time":{"start":1774510688108,"stop":1774510780464,"duration":92356,"minDuration":20010,"maxDuration":31442,"sumDuration":92315}}

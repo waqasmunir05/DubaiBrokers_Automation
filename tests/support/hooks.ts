@@ -11,7 +11,7 @@ Before(async function (this: World) {
   await this.initBrowser();
 });
 
-After(async function (this: World, { result }) {
+After({ timeout: 90000 }, async function (this: World, { result }) {
 
   // On failure, capture screenshot and page source into allure-results
   try {
