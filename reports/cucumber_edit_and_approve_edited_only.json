@@ -1,0 +1,812 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "contract-a---edit-contract-with-otp-approval;broker-edits-contract-a-and-owner-approves-with-otp",
+        "keyword": "Scenario",
+        "line": 14,
+        "name": "Broker Edits Contract A and Owner Approves with OTP",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2040178299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "I open the DLD login page",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 616560300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 7,
+            "name": "I select \"Username\" login option",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 606715399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "I enter username \"majed.1015\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 267078999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "I enter password \"654321\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 46092999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I click on \"Login\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:55"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 115299999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "I should see logged-in username as \"MAJED AHMAD MAJED SAIF ALMHEIRI\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:108"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 451886099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 15,
+            "name": "I land on the dashboard",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:100"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1159599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "I click on \"Contracts\" tab",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 147018099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "I close the popup message",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:196"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 844561799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "I enter the created contract number",
+            "match": {
+              "location": "tests\\steps\\ContractA\\common.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25459300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "I click on Search button to find contract",
+            "match": {
+              "location": "tests\\steps\\ContractA\\common.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1889293799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "I click on searched contract result",
+            "match": {
+              "location": "tests\\steps\\ContractA\\common.steps.ts:64"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 60519600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "I click on contract to view details",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 872823700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "I click on edit action icon",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 52905399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 23,
+            "name": "I click on Save and Continue button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 888746400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "I land on Seller details page",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:85"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8736300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 25,
+            "name": "I click on I confirm checkbox",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:100"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 941116799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 26,
+            "name": "I click on I confirm button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:125"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 72198200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 27,
+            "name": "I click on Save and Continue button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 91129899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 28,
+            "name": "I should see \"Tenancy Information\" details screen",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:450"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16851599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 29,
+            "name": "I click on Save and Continue button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 62123900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 30,
+            "name": "I should see \"Property Financial Information\" details screen",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:465"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19250600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 31,
+            "name": "I modify sell price to \"1250000\"",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:144"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 96843899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 32,
+            "name": "I click on Save and Continue button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 73049800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 33,
+            "name": "I should see \"Commission and Duration\" details screen",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:480"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10920200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 34,
+            "name": "I select Contract Start date 2 days from today",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:536"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 138247699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 35,
+            "name": "I select Contract End date 3 months from start date",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:547"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 92574299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 36,
+            "name": "I click on Save and Continue button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 71185299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 37,
+            "name": "I enter notes for testing",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:709"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 35188500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 38,
+            "name": "I click on Save and Continue button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\edit_contract.steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 30086042099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 39,
+            "name": "I should see preview page with terms and conditions",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:720"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 340530299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 40,
+            "name": "I click on terms and conditions checkbox",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:733"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 37247100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 41,
+            "name": "I click on Submit Contract for Approval button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:742"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 64715400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 42,
+            "name": "I should see success message Your contract has been submitted successfully",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:748"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1901224699
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 284581799
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 312099
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@contractA",
+            "line": 1
+          },
+          {
+            "name": "@editContract",
+            "line": 13
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "contract-a---edit-contract-with-otp-approval",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Contract A - Edit Contract with OTP Approval",
+    "tags": [
+      {
+        "name": "@contractA",
+        "line": 1
+      }
+    ],
+    "uri": "tests\\features\\02_ContractA\\03_edit_contract.feature"
+  },
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "contract-a---approve-edited-contract-with-otp;owner-approves-edited-contract-a-with-otp",
+        "keyword": "Scenario",
+        "line": 14,
+        "name": "Owner Approves Edited Contract A with OTP",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1054391800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "I open the DLD login page",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 550501499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 7,
+            "name": "I select \"Username\" login option",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 565507799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "I enter username \"majed.1015\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 277421199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "I enter password \"654321\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 48085700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I click on \"Login\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:55"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 94044200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "I should see logged-in username as \"MAJED AHMAD MAJED SAIF ALMHEIRI\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:108"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 426359400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 15,
+            "name": "I land on the dashboard",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:100"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 662299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "I click on \"Contracts\" tab",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 153882599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "I close the popup message",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:196"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 806187500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "I enter the created contract number",
+            "match": {
+              "location": "tests\\steps\\ContractA\\common.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19344599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "I click on Search button to find contract",
+            "match": {
+              "location": "tests\\steps\\ContractA\\common.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1642033000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "I click on searched contract result",
+            "match": {
+              "location": "tests\\steps\\ContractA\\common.steps.ts:64"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 37588799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "I open the approval link",
+            "match": {
+              "location": "tests\\steps\\ContractA\\approve_contract.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6792454799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 22,
+            "name": "I verify edited sell price \"1250000\" on approval page",
+            "match": {
+              "location": "tests\\steps\\ContractA\\approve_contract.steps.ts:29"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10824700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 23,
+            "name": "I verify contract dates on approval page",
+            "match": {
+              "location": "tests\\steps\\ContractA\\approve_contract.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12471899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "I click on terms and conditions checkbox",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:733"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 38261299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 25,
+            "name": "I click on submit button",
+            "match": {
+              "location": "tests\\steps\\ContractA\\approve_contract.steps.ts:88"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 57948700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 26,
+            "name": "I confirm approval on popup",
+            "match": {
+              "location": "tests\\steps\\ContractA\\approve_contract.steps.ts:94"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9865629000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 27,
+            "name": "I should see success message \"Your signature request has been accepted successfully\"",
+            "match": {
+              "location": "tests\\steps\\ContractA\\approve_contract.steps.ts:100"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 15388500,
+              "error_message": "Error: ❌ Success message mismatch\nExpected: \"Your signature request has been accepted successfully\"\nActual:   \"SIGNATURE_ACCEPTEDتم قبول التوقيع\"\n    at ApprovalPage.waitForSuccessMessage (D:\\Waqas\\Projects\\Automation\\DubaiBrokers_Automation\\tests\\pages\\ApprovalPage.ts:102:13)\n    at async World.<anonymous> (D:\\Waqas\\Projects\\Automation\\DubaiBrokers_Automation\\tests\\steps\\ContractA\\approve_contract.steps.ts:103:33)"
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 409187799
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 116099
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@contractA",
+            "line": 1
+          },
+          {
+            "name": "@approveEditedContract",
+            "line": 13
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "contract-a---approve-edited-contract-with-otp",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Contract A - Approve Edited Contract with OTP",
+    "tags": [
+      {
+        "name": "@contractA",
+        "line": 1
+      }
+    ],
+    "uri": "tests\\features\\02_ContractA\\04_approve_edited_contract.feature"
+  }
+]

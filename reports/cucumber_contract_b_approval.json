@@ -1,0 +1,275 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "contract-b---owner-approves-contract-with-otp;owner-approves-contract-b-with-otp",
+        "keyword": "Scenario",
+        "line": 13,
+        "name": "Owner Approves Contract B with OTP",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2114422299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "I open the DLD login page",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 628930100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "I select \"Username\" login option",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 665210099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "I enter username \"majed.1015\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 278805800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "I enter password \"654321\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 46765800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "I click on \"Login\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:55"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 124464500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 10,
+            "name": "I should see logged-in username as \"MAJED AHMAD MAJED SAIF ALMHEIRI\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:108"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 925542900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 14,
+            "name": "I land on the dashboard",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:100"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 611199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "I click on \"Contracts\" tab",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 96280499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "I close the popup message",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:196"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 760549100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "broker enters the created Contract B number",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 24529800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "broker clicks on Search button to find contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:42"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 938971799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "broker clicks on searched Contract B result",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 35237400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "broker opens Contract B approval link",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:104"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17023267800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "broker accepts terms and conditions on Contract B approval page",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:125"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22187299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "broker submits Contract B approval",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 59385700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 23,
+            "name": "broker confirms approval on popup for Contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:139"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1065343600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 24,
+            "name": "broker should see Contract B approval success message \"Your signature request has been accepted successfully\"",
+            "match": {
+              "location": "tests\\steps\\ContractB\\approve_contract_b.steps.ts:146"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26125000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 30287744600
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@contractB",
+            "line": 1
+          },
+          {
+            "name": "@approveContractB",
+            "line": 12
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "contract-b---owner-approves-contract-with-otp",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Contract B - Owner Approves Contract with OTP",
+    "tags": [
+      {
+        "name": "@contractB",
+        "line": 1
+      }
+    ],
+    "uri": "tests\\features\\03_ContractB\\02_approve_contract_b.feature"
+  }
+]

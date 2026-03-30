@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","31442","Contract B creation with Person using Emirates ID","","Thu Mar 26 11:38:08 GMT+04:00 2026","passed","Thu Mar 26 11:38:39 GMT+04:00 2026","","","",""
+"","20149","Owner Approves Contract B Extension with OTP","","Thu Mar 26 11:39:20 GMT+04:00 2026","passed","Thu Mar 26 11:39:40 GMT+04:00 2026","","","",""
+"","20714","Broker Requests Contract B Extension","","Thu Mar 26 11:38:59 GMT+04:00 2026","passed","Thu Mar 26 11:39:20 GMT+04:00 2026","","","",""
+"","20010","Owner Approves Contract B with OTP","","Thu Mar 26 11:38:39 GMT+04:00 2026","passed","Thu Mar 26 11:38:59 GMT+04:00 2026","","","",""

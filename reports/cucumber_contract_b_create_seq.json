@@ -1,0 +1,764 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "contract-b-creation-with-person-using-emirates-id;contract-b-creation-with-person-using-emirates-id",
+        "keyword": "Scenario",
+        "line": 13,
+        "name": "Contract B creation with Person using Emirates ID",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1512342299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "I open the DLD login page",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 552628800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "I select \"Username\" login option",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1048686899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "I enter username \"majed.1015\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 263532400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "I enter password \"654321\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 47149199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "I click on \"Login\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:55"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 84347399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 10,
+            "name": "I should see logged-in username as \"MAJED AHMAD MAJED SAIF ALMHEIRI\"",
+            "match": {
+              "location": "tests\\steps\\Login\\login.steps.ts:108"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 421591300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 14,
+            "name": "I land on the dashboard",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:100"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1403699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "I click on \"Contracts\" tab",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 134378499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "I close the popup message",
+            "match": {
+              "location": "tests\\steps\\ContractA\\create_contract.steps.ts:196"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 734451000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "broker clicks on Create Contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 163861599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "broker selects Person in contract B popup",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 31639500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "broker selects Emirates ID as registration type in contract B popup",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:31"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 80309000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "broker enters Emirates ID year \"1986\" and number \"57419044\" in contract B popup",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:104"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 46557299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "broker selects Date of Birth \"29/04/1971\" from calendar in contract B popup",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:117"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 72674100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "broker clicks Proceed to search in contract B popup",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:124"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 954709600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 23,
+            "name": "broker waits for Contract B search result and clicks it",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:134"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 474208599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "broker handles response after selecting contract B search result",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:145"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 18044700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 25,
+            "name": "broker selects Yes on Green List in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 122866699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 26,
+            "name": "broker selects passport expiry date 1 year from today in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:242"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 149360399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 27,
+            "name": "broker selects passport type \"Regular passport\" in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:258"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4293763000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 28,
+            "name": "broker selects Emirates ID expiry date 3 months from today in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:358"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 92531299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 29,
+            "name": "broker enters mobile number \"0558895363\" in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:374"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22991400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 30,
+            "name": "broker enters email address \"waqas.munir@eres.ae\" in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:384"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 31976999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 31,
+            "name": "broker selects Buyer radio in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:394"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 35067300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 32,
+            "name": "broker accepts terms checkbox in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:404"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 40006600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 33,
+            "name": "broker clicks Save and Continue in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:429"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 128985799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 34,
+            "name": "broker should see Property Information screen in contract B flow",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:445"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6829400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 35,
+            "name": "broker selects \"Unit\" from property type lookup in contract B property information",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:457"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 127867700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 36,
+            "name": "broker selects \"Residential\" from Property Usage dropdown in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:471"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 165119000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 37,
+            "name": "broker selects \"Rented\" from Rental Status dropdown in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:490"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2664000399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 38,
+            "name": "broker selects \"Yes\" for Is Freehold question in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:531"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26322399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 39,
+            "name": "broker enters \"2\" for Number of Rooms in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:542"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 23509799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 40,
+            "name": "broker enters \"Marsa Dubai\" for Area/Community in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:553"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 20003899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 41,
+            "name": "broker clicks Save and Continue in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:429"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 82072200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 42,
+            "name": "broker should see next section in contract B flow",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:575"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 509799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 43,
+            "name": "broker enters budget \"700000\" on property financial information page in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:579"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15113600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 44,
+            "name": "broker selects payment method \"Cash\" on property financial information page in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:586"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1669736699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 45,
+            "name": "broker clicks Save and Continue on Buyers Share page in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:613"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1087351200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 46,
+            "name": "broker should verify percentage of buy is \"100%\" in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:652"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 437100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 47,
+            "name": "broker clicks Save and Continue on Buyers Share page in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:613"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1073011099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 48,
+            "name": "broker should see Commission and Duration screen in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:657"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4610799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 49,
+            "name": "broker selects Contract Start Date 10 days from today in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:663"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 84003099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 50,
+            "name": "broker selects Contract End Date 2 months from Contract Start Date in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:689"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 62316399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 51,
+            "name": "broker selects \"Yes\" for Commission will be paid in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:725"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 46119299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 52,
+            "name": "broker enters commission amount \"20000\" in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:739"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22179199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 53,
+            "name": "broker selects \"Yes\" for Is Buyer covering the marketing fees in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:746"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 63356499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 54,
+            "name": "broker clicks Save and Continue in contract B form",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:429"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 75108299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 55,
+            "name": "broker should see Notes page in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:760"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5320299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 56,
+            "name": "broker enters meaningful notes in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:783"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28063099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 57,
+            "name": "broker clicks Save and Continue on Notes page in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:796"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 82330800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 58,
+            "name": "broker should see Contract Preview page in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:806"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9670699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 59,
+            "name": "broker clicks contract preview checkbox in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:823"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1543194700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 60,
+            "name": "broker clicks Submit Contract for Approval in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:906"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 89813200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 61,
+            "name": "broker should see Contract submitted successfully in contract B",
+            "match": {
+              "location": "tests\\steps\\ContractB\\create_contract_b.steps.ts:949"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2368686300
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 721728100
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@contractB",
+            "line": 1
+          },
+          {
+            "name": "@wip",
+            "line": 1
+          },
+          {
+            "name": "@createContractB",
+            "line": 12
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "contract-b-creation-with-person-using-emirates-id",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Contract B creation with Person using Emirates ID",
+    "tags": [
+      {
+        "name": "@contractB",
+        "line": 1
+      },
+      {
+        "name": "@wip",
+        "line": 1
+      }
+    ],
+    "uri": "tests\\features\\03_ContractB\\01_create_contract_b.feature"
+  }
+]

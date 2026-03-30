@@ -1,0 +1,118 @@
+[CLEAN] Removing old lifecycle report artifacts
+[RUN] Contract B extension lifecycle in one go (ordered + fail-fast)
+🏠 User landed on dashboard
+📑 Clicked on "Contracts" tab
+❌ Closed popup message
+🔘 Clicked on "Create Contract B" in the left panel
+👤 Selected Person in Contract B popup
+🪪 Selected Emirates ID as registration type
+🔢 Entered Emirates ID year 1986 and number 57419044
+📅 Selected Date of Birth: 29/04/1971
+▶ Clicked Proceed to search in Contract B popup
+⏳ Waiting for Contract B search result to appear
+✅ Contract B search result clicked
+ℹ️ No response popup appeared after selecting Contract B search result
+✅ Selected Yes on Green List
+📘 Selected passport expiry date: 27/03/2027
+🛂 Selected passport type via "div[class*="option"]:has-text("Regular passport")": Regular passport
+🛂 Passport type selection complete: Regular passport
+📅 Selected Emirates ID expiry date: 27/06/2026
+📱 Entered mobile number: 0558895363
+📧 Entered email address: waqas.munir@eres.ae
+🧑‍💼 Selected Buyer radio in Contract B form
+☑️ Accepted terms checkbox in Contract B form
+➡️ Clicked Save and Continue in Contract B form
+✅ Property Information screen is displayed in Contract B flow
+🏠 Selected property type from lookup: Unit
+📑 Selected Property Usage: Residential
+📑 Selected Rental Status via "div[class*="option"]:has-text("Rented")": Rented
+📑 Rental Status selection complete: Rented
+☑️ Selected Is Freehold: Yes
+🛏️ Entered Number of Rooms: 2
+📍 Entered Area/Community: Marsa Dubai
+➡️ Clicked Save and Continue in Contract B form
+✅ Contract B Property Information section completed
+💰 Entered budget: 700000
+🔽 Opening payment method dropdown for: Cash
+⌨️ Typing "Cash" in dropdown...
+↩️ Pressing Enter to select...
+✅ Selected payment method: Cash
+⏳ Looking for Save and Continue button on Buyers Share page...
+📊 Found 3 button/clickable elements on page
+✅ Found button, clicking...
+➡️ Clicked Save and Continue on Buyers Share page
+✅ Acknowledged expected percentage: 100%
+⏳ Looking for Save and Continue button on Buyers Share page...
+📊 Found 3 button/clickable elements on page
+✅ Found button, clicking...
+➡️ Clicked Save and Continue on Buyers Share page
+✅ Commission and Duration screen is visible
+📅 Selected Contract Start Date: 06/04/2026
+📅 Selected Contract End Date: 06/06/2026
+🔘 Selected Commission will be paid?: Yes
+💵 Entered commission amount: 20000
+🔘 Selected Is Buyer covering marketing fees?: Yes
+➡️ Clicked Save and Continue in Contract B form
+✅ Notes page is visible in Contract B flow
+📝 Entered meaningful notes in Contract B flow: Contract B updated and reviewed on 27/03/2026. Terms, dates, commission, and buyer details were verified before submission.
+➡️ Clicked Save and Continue on Notes page
+✅ Contract Preview page is visible in Contract B flow
+🔎 Contract Preview checkbox checked=true, submitEnabled=true
+☑️ Contract Preview checkbox is checked
+📨 Clicked Submit Contract for Approval
+✅ Success message contains expected text: Your contract has been submitted successfully.
+🔢 Contract B number captured: CB202603272389
+📄 Contract data saved to: D:\Waqas\Projects\Automation\DubaiBrokers_Automation\contract-data.json
+🏠 User landed on dashboard
+📑 Clicked on "Contracts" tab
+❌ Closed popup message
+📂 Contract B number loaded from file: CB202603272389
+🔎 Entered Contract B number for search: CB202603272389
+📑 Selected Contract Type filter: Contract B
+🔁 Re-entered Contract B number after filter selection: CB202603272389
+🔍 Clicked Search for Contract B
+✅ Opened searched Contract B result for: CB202603272389
+📄 Waiting for approval link to load
+🔗 Extracted approval link (fallback): https://dubailand.gov.ae/r/FyfnlQ6GjC
+🌐 Opening Contract B approval link in new tab
+✅ Contract B approval link opened in new tab
+🔘 Looking for initial Verify button
+✅ Verify button clicked — OTP field should appear
+⏳ Waiting for OTP field to appear
+✅ OTP field appeared
+🔢 Generated random OTP: 48270
+✅ OTP entered
+🔘 Looking for submit button after OTP entry
+✅ Post-OTP submit button clicked
+✅ OTP verification complete, page stable
+🔍 Verifying contract number on approval page: CB202603272389
+⚠️ Contract number not found on approval page: CB202603272389
+✅ Contract B approval page opened and OTP verified
+☑️ Clicking on terms and conditions checkbox
+✅ Terms and conditions checkbox checked (approval page - XPath 1)
+☑️ Accepted terms on Contract B approval page
+📤 Clicking on submit button
+✅ Submit button clicked
+📨 Submitted Contract B approval
+⏳ Waiting for confirmation popup to appear
+👍 Clicking Yes button on confirmation popup
+✅ Confirmation accepted
+⏳ Waiting for success message to appear
+✅ Approval completed successfully
+✅ Confirmed Contract B approval popup
+✅ Contract B approval success verified: Your signature request has been accepted successfully.
+🏠 User landed on dashboard
+📑 Clicked on "Contracts" tab
+❌ Closed popup message
+📂 Contract B number loaded from file: CB202603272389
+🔎 Entered Contract B number for search: CB202603272389
+📑 Selected Contract Type filter: Contract B
+🔁 Re-entered Contract B number after filter selection: CB202603272389
+🔍 Clicked Search for Contract B
+✅ Opened searched Contract B result for: CB202603272389
+📋 Opening Contract B details page
+ℹ️ Details already loaded or button not visible
+⏳ Waiting for extend button to appear
+✅ Extend button clicked
+🟦 Wrote attachments for scenario-1774593647296 -> unknown-feature-scenario-1774593647296-screenshot-1774593647296.png, unknown-feature-scenario-1774593647296-page-1774593647296.html
+[STOP] Contract B extension lifecycle failed.
