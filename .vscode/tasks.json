@@ -1953,6 +1953,16 @@
 			"label": "git-commit-remaining",
 			"type": "shell",
 			"command": "git add .vscode/tasks.json contract-data.json reports/ && git commit -m \"chore: update tasks config, contract data, and report artifacts\" && echo COMMITTED_REST_OK"
+		},
+		{
+			"label": "git-merge-final",
+			"type": "shell",
+			"command": "git checkout feat/full-automation-baseline && git merge feat/create-contract-b --no-ff -m \"Merge feat/create-contract-b: Contract B full lifecycle (create, approve, cancel, approve-cancel)\" && git log --oneline -8 && echo MERGE_DONE"
+		},
+		{
+			"label": "git-commit-tasks-then-merge",
+			"type": "shell",
+			"command": "git add .vscode/tasks.json && git commit -m \"chore: update VS Code tasks after lifecycle runs\" && git checkout feat/full-automation-baseline && git merge feat/create-contract-b --no-ff -m \"Merge feat/create-contract-b: Contract B full lifecycle (create, approve, cancel, approve-cancel)\" && git log --oneline -8 && echo MERGE_DONE"
 		}
 	]
 }
