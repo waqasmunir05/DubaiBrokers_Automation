@@ -1757,6 +1757,202 @@
 			],
 			"isBackground": false,
 			"group": "test"
+		},
+		{
+			"label": "git-branch-verify-stable",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"branch",
+				"-v"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "remove-cancel-files",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"if exist tests\\features\\03_ContractB\\07_cancel_contract_b.feature del /f /q tests\\features\\03_ContractB\\07_cancel_contract_b.feature & if exist tests\\features\\03_ContractB\\08_approve_cancellation_contract_b.feature del /f /q tests\\features\\03_ContractB\\08_approve_cancellation_contract_b.feature & if exist tests\\steps\\ContractB\\cancel_contract_b.steps.ts del /f /q tests\\steps\\ContractB\\cancel_contract_b.steps.ts & if exist tests\\support\\cucumber-contractb.mjs del /f /q tests\\support\\cucumber-contractb.mjs & if exist reports\\cucumber_contract_b_cancellation_lifecycle.json del /f /q reports\\cucumber_contract_b_cancellation_lifecycle.json & if exist reports\\cucumber_contract_b_cancellation_lifecycle.html del /f /q reports\\cucumber_contract_b_cancellation_lifecycle.html & if exist reports\\cucumber_contract_b_cancel_only.json del /f /q reports\\cucumber_contract_b_cancel_only.json & if exist reports\\cucumber_contract_b_cancel_only.html del /f /q reports\\cucumber_contract_b_cancel_only.html"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "remove-cancel-log",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"if exist reports\\contractb_cancel_lifecycle_run.log del /f /q reports\\contractb_cancel_lifecycle_run.log"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-stable-lifecycle-run",
+			"type": "shell",
+			"command": "tests\\utils\\run-contract-b-extension-lifecycle.cmd",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-stable-lifecycle-log-run",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"tests\\utils\\run-contract-b-extension-lifecycle.cmd > reports\\contract_b_stable_run.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractb-cancel-lifecycle",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractb:cancel:lifecycle"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-cancel-lifecycle-log-run",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"tests\\utils\\run-contract-b-cancel-lifecycle.cmd > reports\\contract_b_cancel_run.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractb-cancel-lifecycle",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractb:cancel:lifecycle"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-cancel-lifecycle-log-run",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"tests\\utils\\run-contract-b-cancel-lifecycle.cmd > reports\\contract_b_cancel_run.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-cancel-lifecycle-log-run",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"tests\\utils\\run-contract-b-cancel-lifecycle.cmd > reports\\contract_b_cancel_run.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractb-cancel-lifecycle",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractb:cancel:lifecycle"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-b-cancel-lifecycle-log-run",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"tests\\utils\\run-contract-b-cancel-lifecycle.cmd > reports\\contract_b_cancel_run.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractb-cancel-lifecycle",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractb:cancel:lifecycle"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractb-cancel-lifecycle-exitcode",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"tests\\utils\\run-contract-b-cancel-lifecycle.cmd & echo EXITCODE:%ERRORLEVEL%"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractb-cancel-lifecycle",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractb:cancel:lifecycle"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "debug-contractb-cancel-lifecycle-full-output",
+			"type": "shell",
+			"command": "tests\\utils\\run-contract-b-cancel-lifecycle.cmd",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "git-stage-cancel-files",
+			"type": "shell",
+			"command": "git add tests/features/03_ContractB/07_cancel_contract_b.feature tests/features/03_ContractB/08_approve_cancellation_contract_b.feature tests/steps/ContractB/cancel_contract_b.steps.ts tests/utils/run-contract-b-cancel-lifecycle.cmd && echo STAGED_OK"
+		},
+		{
+			"label": "git-commit-cancel-lifecycle",
+			"type": "shell",
+			"command": "git commit -m \"feat(contract-b): add cancel request and cancellation approval lifecycle (07+08)\" -m \"- Feature 07: broker initiates cancel request on approved Contract B\" -m \"- Feature 08: owner approves cancellation, asserts contract status Cancelled\" -m \"- Hardened Contracts tab navigation with multi-fallback + overlay wait\" -m \"- Post-approval re-search and td[7] status assertion\" && echo COMMITTED_OK"
+		},
+		{
+			"label": "git-merge-to-baseline",
+			"type": "shell",
+			"command": "git checkout feat/full-automation-baseline && git merge feat/create-contract-b --no-ff -m \"Merge feat/create-contract-b: Contract B full lifecycle (create, approve, cancel, approve-cancel)\" && echo MERGE_OK"
+		},
+		{
+			"label": "git-commit-remaining",
+			"type": "shell",
+			"command": "git add .vscode/tasks.json contract-data.json reports/ && git commit -m \"chore: update tasks config, contract data, and report artifacts\" && echo COMMITTED_REST_OK"
 		}
 	]
 }
