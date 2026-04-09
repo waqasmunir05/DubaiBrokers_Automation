@@ -14,11 +14,37 @@ When('I click on contract to view details', { timeout: 120000 }, async function 
   logger.info('📋 Clicking on contract to view details');
   await waitForPageStable(this.page, 15000);
 
-  // Wait for edit button to appear to confirm details page loaded first
-  logger.info('⏳ Waiting for edit button to appear');
-  const editButton = this.page.locator('//*[@id="edit_contract"]');
-  await editButton.waitFor({ state: 'visible', timeout: 30000 });
-  logger.info('✅ Edit button is visible');
+  logger.info('⏳ Waiting for contract details actions/content to appear');
+  const readinessChecks = [
+    { name: 'edit button', locator: this.page.locator('#edit_contract').first() },
+    { name: 'cancel button', locator: this.page.locator('#cancel_contract').first() },
+    { name: 'approval link', locator: this.page.locator('a[href*="/r/"]').first() },
+    { name: 'pending status', locator: this.page.getByText(/Pending|Approved|Cancelled|Expired/i).first() },
+  ];
+
+  let detailsReady = false;
+  for (const check of readinessChecks) {
+    const visible = await check.locator.isVisible({ timeout: 8000 }).catch(() => false);
+    if (visible) {
+      logger.info(`✅ Contract details page confirmed by ${check.name}`);
+      detailsReady = true;
+      break;
+    }
+  }
+
+  if (!detailsReady) {
+    const searchedContractNumber = (this as any).contractNumber;
+    if (searchedContractNumber) {
+      detailsReady = await detailsPage.verifyContractNumber(searchedContractNumber);
+      if (detailsReady) {
+        logger.info('✅ Contract details page confirmed by contract number');
+      }
+    }
+  }
+
+  if (!detailsReady) {
+    throw new Error(`❌ Contract details page did not become ready at URL: ${this.page.url()}`);
+  }
 
   // Log minimal page info
   const pageTitle = await detailsPage.getPageTitle();

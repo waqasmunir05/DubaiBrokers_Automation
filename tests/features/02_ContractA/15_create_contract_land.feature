@@ -1,20 +1,19 @@
-@contractA @database
-Feature: Contract A - Create New Contract on Unit Property
+@contractA @database @landContractA
+Feature: Contract A - Create New Contract on Land Property
 
 Background:
-  # Login once before running Contract A tests
   Given I open the DLD login page
   When I select "Username" login option
   And I enter username "majed.1015"
   And I enter password "654321"
   And I click on "Login"
 
-@createContract
-Scenario: Create New Contract on a Unit Property with Single Owner
-  Given broker uses Contract F data set key "<contractFDataSetKey>"
+@createContractLand
+Scenario: Create New Contract A on a Land Property using Date of Birth verification
+  Given broker uses Contract F data set key "land-434-2026"
   And I cancel previous approved Contract F via support API if available
-  Given I reset contract status for certificate "<certificateNumber>" year "<certificateYear>"
-  And I reset Contract F status for certificate "<certificateNumber>" year "<certificateYear>"
+  And I reset contract status for certificate "434" year "2026"
+  And I reset Contract F status for certificate "434" year "2026"
   When I land on the dashboard
   And I click on "Contracts" tab
   And I close the popup message
@@ -22,13 +21,13 @@ Scenario: Create New Contract on a Unit Property with Single Owner
   Then I should see owner selection options
   When I select "Owner Person" option
   Then I should see property validation form
-  When I enter Certificate Number "<certificateNumber>"
-  And I select Certificate Year "<certificateYear>"
-  And I select Property Type "<propertyType>"
-  And I select Owner Verification Type "<ownerVerificationType>"
-  And I select "<verificationOption>" from the list
-  Then I should see "<verificationField>" field displayed
-  When I enter "<verificationField>" value "<verificationValue>"
+  When I enter Certificate Number "434"
+  And I select Certificate Year "2026"
+  And I select Property Type "Land"
+  And I select Owner Verification Type "Date of Birth"
+  And I select "Date of Birth" from the list
+  Then I should see "Date of Birth" field displayed
+  When I enter "Date of Birth" value "01/07/1971"
   And I click on "Save & Close" button
   Then I should see "Property Information" details screen
   When I select "Residential" from Usage dropdown
@@ -58,7 +57,3 @@ Scenario: Create New Contract on a Unit Property with Single Owner
   When I click on terms and conditions checkbox
   And I click on Submit Contract for Approval button
   Then I should see success message Your contract has been submitted successfully
-
-Examples:
-  | contractFDataSetKey | certificateNumber | certificateYear | propertyType | ownerVerificationType | verificationOption | verificationField | verificationValue |
-  | unit-18327-2019     | 18327             | 2019            | Unit         | Passport              | Passport           | Passport          | 382239911         |

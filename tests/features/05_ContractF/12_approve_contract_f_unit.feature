@@ -1,5 +1,5 @@
-@contractF
-Feature: Contract F - Open Contract Details for Approval
+@contractF @contractFUnit
+Feature: Contract F - Open Contract Details for Approval on Unit Property
 
 Background:
   Given I open the DLD login page
@@ -7,10 +7,10 @@ Background:
   And I enter username "majed.1015"
   And I enter password "654321"
   And I click on "Login"
-  And broker uses Contract F data set key "land-434-2026"
+  And broker uses Contract F data set key "unit-18327-2019"
 
-@approveContractF
-Scenario: Broker opens created Contract F details page for approval handling
+@approveContractFUnit
+Scenario: Broker opens created Contract F details page for approval handling on Unit property
   When I land on the dashboard
   And I click on "Contracts" tab
   And I close the popup message

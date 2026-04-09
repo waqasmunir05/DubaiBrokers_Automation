@@ -1,0 +1,15 @@
+node_modules/
+dist/
+
+# Generated test artifacts
+allure-results/
+allure-report/
+reports/
+
+# Debug captures
+*-debug.png
+usage-dropdown-debug.png
+success-message-debug.png
+
+# Local runtime state
+contract-data.json

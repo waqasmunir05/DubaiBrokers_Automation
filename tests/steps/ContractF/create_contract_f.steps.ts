@@ -28,13 +28,91 @@ function writeContractData(data: Record<string, unknown>): void {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 
+function normalizeContractFDataSetKey(dataSetKey: string): string {
+  return String(dataSetKey || '').trim().toLowerCase();
+}
+
+function getContractFDataSetKey(world?: World): string {
+  const key = normalizeContractFDataSetKey(String((world as any)?.contractFDataSetKey || ''));
+  return key || 'default';
+}
+
+function getStringMap(data: Record<string, unknown>, fieldName: string): Record<string, string> {
+  const value = data[fieldName];
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>).map(([key, entryValue]) => [key, String(entryValue || '').trim()])
+  );
+}
+
+function clearSavedContractFReferences(world: World | undefined, contractFNumber: string): void {
+  const normalizedContractFNumber = String(contractFNumber || '').trim();
+  if (!/^CF/i.test(normalizedContractFNumber)) {
+    return;
+  }
+
+  const dataSetKey = getContractFDataSetKey(world);
+  const updatedData = readContractData();
+  const updatedContractFByDataSet = getStringMap(updatedData, 'contractFNumbersByDataSet');
+  const updatedPreparedByDataSet = getStringMap(updatedData, 'preparedContractFNumbersByDataSet');
+  const updatedApprovedByDataSet = getStringMap(updatedData, 'lastApprovedContractFNumbersByDataSet');
+
+  if (String(updatedData.contractFNumber || '').trim() === normalizedContractFNumber) {
+    delete updatedData.contractFNumber;
+  }
+  if (String(updatedData.preparedContractFNumber || '').trim() === normalizedContractFNumber) {
+    delete updatedData.preparedContractFNumber;
+  }
+  if (String(updatedData.contractNumber || '').trim() === normalizedContractFNumber) {
+    delete updatedData.contractNumber;
+  }
+  if (String(updatedData.lastApprovedContractFNumber || '').trim() === normalizedContractFNumber) {
+    delete updatedData.lastApprovedContractFNumber;
+  }
+  if (updatedContractFByDataSet[dataSetKey] === normalizedContractFNumber) {
+    delete updatedContractFByDataSet[dataSetKey];
+  }
+  if (updatedPreparedByDataSet[dataSetKey] === normalizedContractFNumber) {
+    delete updatedPreparedByDataSet[dataSetKey];
+  }
+  if (updatedApprovedByDataSet[dataSetKey] === normalizedContractFNumber) {
+    delete updatedApprovedByDataSet[dataSetKey];
+  }
+
+  writeContractData({
+    ...updatedData,
+    contractFNumbersByDataSet: updatedContractFByDataSet,
+    preparedContractFNumbersByDataSet: updatedPreparedByDataSet,
+    lastApprovedContractFNumbersByDataSet: updatedApprovedByDataSet,
+    lastCanceledContractFNumber: normalizedContractFNumber,
+    lastUpdatedAt: new Date().toISOString()
+  });
+
+  logger.info(`🧽 Cleared saved Contract F references for ${normalizedContractFNumber} under data set key "${dataSetKey}"`);
+}
+
 async function cancelContractFViaSupportApi(contractFNumber: string): Promise<void> {
   const encodedNumber = encodeURIComponent(contractFNumber);
   const actor = 'Automation-waqas';
   const url = `https://apiqa.dubailand.gov.ae/UnifiedContracts.MobileServer_F/supports/CancelContract/${encodedNumber}/${actor}`;
+  const controller = new AbortController();
+  const timeoutMs = 45000;
+  const timeoutHandle = setTimeout(() => controller.abort(), timeoutMs);
 
   logger.info(`🧹 Calling support cancel API for Contract F: ${contractFNumber}`);
-  const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+  let response: Response;
+  try {
+    response = await fetch(url, { method: 'GET', redirect: 'follow', signal: controller.signal });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`CancelContract API request failed for ${contractFNumber}: ${message}`);
+  } finally {
+    clearTimeout(timeoutHandle);
+  }
+
   const body = (await response.text().catch(() => '')).trim();
 
   if (!response.ok) {
@@ -44,19 +122,35 @@ async function cancelContractFViaSupportApi(contractFNumber: string): Promise<vo
   logger.info(`✅ CancelContract API success for ${contractFNumber}. Response: ${body.slice(0, 250) || '<empty>'}`);
 }
 
-Given('I cancel previous approved Contract F via support API if available', async function () {
+Given('broker uses Contract F data set key {string}', function (this: World, dataSetKey: string) {
+  const normalizedKey = normalizeContractFDataSetKey(dataSetKey);
+  if (!normalizedKey) {
+    throw new Error('Contract F data set key cannot be empty');
+  }
+
+  (this as any).contractFDataSetKey = normalizedKey;
+  logger.info(`🗂️ Using Contract F data set key: ${normalizedKey}`);
+});
+
+Given('I cancel previous approved Contract F via support API if available', { timeout: 90000 }, async function (this: World) {
   const data = readContractData();
-  const contractFNumber = String(data.contractFNumber || '').trim();
+  const dataSetKey = getContractFDataSetKey(this);
+  const lastApprovedByDataSet = getStringMap(data, 'lastApprovedContractFNumbersByDataSet');
+  const contractFByDataSet = getStringMap(data, 'contractFNumbersByDataSet');
+  const contractFNumber = String(
+    lastApprovedByDataSet[dataSetKey] || contractFByDataSet[dataSetKey] || data.lastApprovedContractFNumber || data.contractFNumber || ''
+  ).trim();
 
   if (!contractFNumber || !/^CF/i.test(contractFNumber)) {
-    logger.info('ℹ️ No valid previous Contract F number found in contract-data.json to cancel. Skipping API cleanup.');
+    logger.info(`ℹ️ No valid previous Contract F number found for data set key "${dataSetKey}". Skipping API cleanup.`);
     return;
   }
 
   await cancelContractFViaSupportApi(contractFNumber);
+  clearSavedContractFReferences(this, contractFNumber);
 });
 
-Given('I cancel approved Contract F number {string} via support API', async function (contractFNumber: string) {
+Given('I cancel approved Contract F number {string} via support API', { timeout: 90000 }, async function (contractFNumber: string) {
   const normalized = String(contractFNumber || '').trim();
   if (!/^CF/i.test(normalized)) {
     throw new Error(`CancelContract requires a valid Contract F number starting with CF. Got: "${normalized}"`);
@@ -368,19 +462,28 @@ Then('broker stores active Contract F number for reuse', { timeout: 120000 }, as
   const contractFPage = new ContractFPage(this.page);
   await contractFPage.verifyContractFSubmissionSuccessMessage();
   const contractFNumber = await contractFPage.getSubmittedContractFNumber();
+  const dataSetKey = getContractFDataSetKey(this);
 
   (this as any).contractFNumber = contractFNumber;
   (this as any).contractNumber = contractFNumber;
 
   const existingData = readContractData();
+  const contractFNumbersByDataSet = getStringMap(existingData, 'contractFNumbersByDataSet');
+  const preparedContractFNumbersByDataSet = getStringMap(existingData, 'preparedContractFNumbersByDataSet');
+  contractFNumbersByDataSet[dataSetKey] = contractFNumber;
+  preparedContractFNumbersByDataSet[dataSetKey] = contractFNumber;
+
   writeContractData({
     ...existingData,
+    contractFNumbersByDataSet,
+    preparedContractFNumbersByDataSet,
+    preparedContractFNumber: contractFNumber,
     contractFNumber,
     contractNumber: contractFNumber,
     lastUpdatedAt: new Date().toISOString()
   });
 
-  logger.info(`💾 Stored Contract F number for reuse: ${contractFNumber}`);
+  logger.info(`💾 Stored Contract F number for reuse: ${contractFNumber} under data set key "${dataSetKey}"`);
 });
 
 When('broker clicks Add button on Additional Terms and Conditions page on Contract F', { timeout: 120000 }, async function (this: World) {

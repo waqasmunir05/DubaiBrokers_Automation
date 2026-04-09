@@ -85,8 +85,49 @@ function ensureUploadSampleFiles(): string[] {
   return files;
 }
 
+function getContractDataPath(): string {
+  return path.join(process.cwd(), 'contract-data.json');
+}
+
+function readContractData(): Record<string, any> {
+  const contractFilePath = getContractDataPath();
+  if (!fs.existsSync(contractFilePath)) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(fs.readFileSync(contractFilePath, 'utf-8'));
+  } catch {
+    return {};
+  }
+}
+
+function writeContractData(data: Record<string, any>): void {
+  fs.writeFileSync(getContractDataPath(), JSON.stringify(data, null, 2));
+}
+
+function normalizeContractFDataSetKey(dataSetKey: string): string {
+  return String(dataSetKey || '').trim().toLowerCase();
+}
+
+function getContractFDataSetKey(world?: World): string {
+  const key = normalizeContractFDataSetKey(String((world as any)?.contractFDataSetKey || ''));
+  return key || 'default';
+}
+
+function getStringMap(data: Record<string, any>, fieldName: string): Record<string, string> {
+  const value = data[fieldName];
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>).map(([key, entryValue]) => [key, String(entryValue || '').trim()])
+  );
+}
+
 When('broker enters the created Contract F number', async function (this: World) {
-  const contractFilePath = path.join(process.cwd(), 'contract-data.json');
+  const contractFilePath = getContractDataPath();
 
   if (!fs.existsSync(contractFilePath)) {
     throw new Error(`contract-data.json not found at ${contractFilePath}. Run Contract F create flow first.`);
@@ -94,12 +135,20 @@ When('broker enters the created Contract F number', async function (this: World)
 
   let contractNumber = '';
   try {
-    const fileData = fs.readFileSync(contractFilePath, 'utf-8');
-    const data = JSON.parse(fileData);
-    // Prefer contractFNumber (CF prefix), never fall back to a CB/CA number
-    const cfNum = (data.contractFNumber || '').trim();
-    const fallback = (data.contractNumber || '').trim();
-    contractNumber = /^CF/i.test(cfNum) ? cfNum : (/^CF/i.test(fallback) ? fallback : '');
+    const data = readContractData();
+    const dataSetKey = getContractFDataSetKey(this);
+    const preparedByDataSet = getStringMap(data, 'preparedContractFNumbersByDataSet');
+    const contractFByDataSet = getStringMap(data, 'contractFNumbersByDataSet');
+    const prepared = String(preparedByDataSet[dataSetKey] || data.preparedContractFNumber || '').trim();
+    const cfNum = String(contractFByDataSet[dataSetKey] || data.contractFNumber || '').trim();
+    const fallback = String(data.contractNumber || '').trim();
+    contractNumber = /^CF/i.test(prepared)
+      ? prepared
+      : /^CF/i.test(cfNum)
+        ? cfNum
+        : /^CF/i.test(fallback)
+          ? fallback
+          : '';
   } catch (error) {
     throw new Error(`Unable to read latest Contract F number from contract-data.json: ${error}`);
   }
@@ -239,7 +288,7 @@ Then('broker should see Contract F details page with seller and buyer approval l
   const detailsPage = new ContractDetailsPage(this.page);
   const contractNumber = String((this as any).contractFNumber || (this as any).contractNumber || '').trim();
 
-  const approvalLinkCount = await detailsPage.verifyApprovalLinkCount(1);
+  const approvalLinkCount = await detailsPage.verifyApprovalLinkCount(2);
 
   if (contractNumber) {
     const detailsContractNumberLocator = this.page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[2]/h4');
@@ -260,6 +309,9 @@ Then('broker should see Contract F details page with seller and buyer approval l
 
   // Cache the approval links for later use (Seller = index 0, Buyer = index 1)
   const cachedLinks = await collectApprovalLinks(this.page);
+  if (cachedLinks.length < 2) {
+    throw new Error(`Expected seller and buyer approval links on Contract F details page, but found ${cachedLinks.length}: ${cachedLinks.join(', ')}`);
+  }
   (this as any).cachedApprovalLinks = cachedLinks;
   logger.info(`💾 Cached ${cachedLinks.length} approval link(s) for Seller/Buyer steps`);
 
@@ -331,7 +383,7 @@ Then('signatory page loads and broker clicks Get Token for Contract F', { timeou
   const contractNumber = String((this as any).contractFNumber || (this as any).contractNumber || '').trim();
 
   logger.info('🔘 Triggering Get Token/Verify flow on Contract F signatory page');
-  await approvalPage.handleOTPVerification(contractNumber);
+  await approvalPage.handleOTPVerification(contractNumber, { requireTokenRequest: true });
   logger.info('✅ Get Token/Verify flow completed on Contract F signatory page');
 });
 
@@ -377,11 +429,11 @@ When('broker confirms approval on popup for Contract F', { timeout: 120000 }, as
   logger.info('✅ Confirmed Contract F approval popup');
 });
 
-Then('broker should see Contract F approval success message {string}', async function (this: World, expectedMessage: string) {
+Then('broker should see Contract F approval success message {string}', { timeout: 120000 }, async function (this: World, expectedMessage: string) {
   const page = (this as any).approvalPage || this.page;
   const successHeading = page.locator('xpath=/html/body/div[3]/div/div/div/h4').first();
 
-  await successHeading.waitFor({ state: 'visible', timeout: 30000 });
+  await successHeading.waitFor({ state: 'visible', timeout: 90000 });
 
   const firstTextNode = await successHeading.evaluate((element: HTMLElement) => {
     const firstText = Array.from(element.childNodes).find(
@@ -397,6 +449,33 @@ Then('broker should see Contract F approval success message {string}', async fun
     throw new Error(
       `Contract F approval success message mismatch. Expected "${expectedMessage}", actual first text node was "${firstTextNode}"`
     );
+  }
+
+  if (/All parties have completed their signatures\./i.test(normalizedActual)) {
+    const approvedContractFNumber = String((this as any).contractFNumber || (this as any).contractNumber || '').trim();
+    if (/^CF/i.test(approvedContractFNumber)) {
+      const existingData = readContractData();
+      const dataSetKey = getContractFDataSetKey(this);
+      const preparedContractFNumbersByDataSet = getStringMap(existingData, 'preparedContractFNumbersByDataSet');
+      const contractFNumbersByDataSet = getStringMap(existingData, 'contractFNumbersByDataSet');
+      const lastApprovedContractFNumbersByDataSet = getStringMap(existingData, 'lastApprovedContractFNumbersByDataSet');
+      preparedContractFNumbersByDataSet[dataSetKey] = approvedContractFNumber;
+      contractFNumbersByDataSet[dataSetKey] = approvedContractFNumber;
+      lastApprovedContractFNumbersByDataSet[dataSetKey] = approvedContractFNumber;
+
+      writeContractData({
+        ...existingData,
+        preparedContractFNumbersByDataSet,
+        contractFNumbersByDataSet,
+        lastApprovedContractFNumbersByDataSet,
+        preparedContractFNumber: approvedContractFNumber,
+        contractFNumber: approvedContractFNumber,
+        contractNumber: approvedContractFNumber,
+        lastApprovedContractFNumber: approvedContractFNumber,
+        lastUpdatedAt: new Date().toISOString()
+      });
+      logger.info(`💾 Stored last approved Contract F number: ${approvedContractFNumber} under data set key "${dataSetKey}"`);
+    }
   }
 
   logger.info(`✅ Contract F approval success verified: ${firstTextNode}`);

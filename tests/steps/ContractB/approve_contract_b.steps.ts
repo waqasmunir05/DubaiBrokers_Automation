@@ -68,25 +68,22 @@ When('broker clicks on searched Contract B result', { timeout: 90000 }, async fu
   const contractNumber = (this as any).contractNumber;
   const resultRowByNumber = this.page.locator(`table tbody tr:has-text("${contractNumber}")`).first();
   const resultCellByNumber = resultRowByNumber.locator('td').first();
-  const firstResultCell = this.page.locator('table tbody tr td').first();
 
   const searchDeadline = Date.now() + 90000;
   let clicked = false;
 
   while (Date.now() < searchDeadline && !clicked) {
     if (await resultCellByNumber.isVisible().catch(() => false)) {
+      const rowText = ((await resultRowByNumber.textContent().catch(() => '')) || '').trim();
+      if (!rowText.includes(contractNumber)) {
+        await this.page.waitForTimeout(1500);
+        await waitForPageStable(this.page, 5000).catch(() => {});
+        continue;
+      }
+
       await resultCellByNumber.click({ force: true });
       clicked = true;
       logger.info(`✅ Opened searched Contract B result for: ${contractNumber}`);
-      break;
-    }
-
-    if (await firstResultCell.isVisible().catch(() => false)) {
-      const rowText = ((await firstResultCell.locator('xpath=ancestor::tr').textContent().catch(() => '')) || '').trim();
-      logger.info(`ℹ️ Falling back to first visible Contract B result row: ${rowText}`);
-      await firstResultCell.click({ force: true });
-      clicked = true;
-      logger.info('✅ Opened first visible searched Contract B result');
       break;
     }
 
@@ -95,6 +92,8 @@ When('broker clicks on searched Contract B result', { timeout: 90000 }, async fu
   }
 
   if (!clicked) {
+    const visibleRows = await this.page.locator('table tbody tr').allTextContents().catch(() => [] as string[]);
+    logger.info(`ℹ️ Visible search rows while looking for Contract B "${contractNumber}": ${visibleRows.map((row) => row.replace(/\s+/g, ' ').trim()).join(' | ')}`);
     throw new Error(`Contract B search result did not appear for contract number: ${contractNumber}`);
   }
 

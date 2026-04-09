@@ -1,5 +1,5 @@
-@contractF
-Feature: Contract F - Prepare Create Contract Flow
+@contractF @contractFUnit
+Feature: Contract F - Prepare Create Contract Flow on Unit Property
 
 Background:
   Given I open the DLD login page
@@ -7,10 +7,10 @@ Background:
   And I enter username "majed.1015"
   And I enter password "654321"
   And I click on "Login"
-  And broker uses Contract F data set key "land-434-2026"
+  And broker uses Contract F data set key "unit-18327-2019"
   And I cancel previous approved Contract F via support API if available
-  And I reset contract status for certificate "434" year "2026"
-  And I reset Contract F status for certificate "434" year "2026"
+  And I reset contract status for certificate "18327" year "2019"
+  And I reset Contract F status for certificate "18327" year "2019"
   When I land on the dashboard
   And I click on "Contracts" tab
   And I close the popup message
@@ -18,13 +18,13 @@ Background:
   Then I should see owner selection options
   When I select "Owner Person" option
   Then I should see property validation form
-  When I enter Certificate Number "434"
-  And I select Certificate Year "2026"
-  And I select Property Type "Land"
-  And I select Owner Verification Type "Date of Birth"
-  And I select "Date of Birth" from the list
-  Then I should see "Date of Birth" field displayed
-  When I enter "Date of Birth" value "01/07/1971"
+  When I enter Certificate Number "18327"
+  And I select Certificate Year "2019"
+  And I select Property Type "Unit"
+  And I select Owner Verification Type "Passport"
+  And I select "Passport" from the list
+  Then I should see "Passport" field displayed
+  When I enter "Passport" value "382239911"
   And I click on "Save & Close" button
   Then I should see "Property Information" details screen
   When I select "Residential" from Usage dropdown
@@ -127,8 +127,8 @@ Background:
   And broker stores active Contract B number for Contract F use
   When broker returns to Contracts tab after approval flow for Contract F
 
-@prepareContractF
-Scenario: Prepare active Contract A and Contract B before Contract F process
+@prepareContractFUnit
+Scenario: Prepare active Contract A and Contract B before Contract F process on Unit property
   When broker enters the saved Contract A number for Contract F
   And I click on Search button to find contract
   And I click on searched contract result

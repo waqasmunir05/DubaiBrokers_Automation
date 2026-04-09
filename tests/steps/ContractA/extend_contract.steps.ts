@@ -1,21 +1,15 @@
 import { When } from '@cucumber/cucumber';
 import { World } from '../../support/world';
+import { ContractDetailsPage } from '../../pages/ContractDetailsPage';
 import { logger } from '../../utils/logger';
 
 /**
  * Contract Extension Step Definitions
  */
 
-When('I click on extend action icon', async function (this: World) {
-  logger.info('⏳ Waiting for extend button to appear');
-  
-  const extendButtonXPath = '/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div/div[8]/div/div/button[3]/div/i';
-  const extendButton = this.page.locator(`xpath=${extendButtonXPath}`);
-  
-  await extendButton.waitFor({ state: 'visible', timeout: 30000 });
-  await extendButton.click();
-  
-  logger.info('✅ Extend button clicked');
+When('I click on extend action icon', { timeout: 60000 }, async function (this: World) {
+  const detailsPage = new ContractDetailsPage(this.page);
+  await detailsPage.clickExtendButton();
 });
 
 When('I select new Contract End date 4 months from today', async function (this: World) {

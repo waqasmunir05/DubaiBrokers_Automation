@@ -10,7 +10,7 @@
     "outDir": "./dist",
     "types": ["node"]
   },
-  "include": ["tests/**/*.ts"],
+  "include": ["tests/**/*.ts", "tests/**/*.d.ts"],
   "ts-node": {
     "transpileOnly": true,
     "files": true

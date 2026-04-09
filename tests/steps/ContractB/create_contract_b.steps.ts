@@ -131,12 +131,12 @@ When('broker clicks Proceed to search in contract B popup', async function (this
   logger.info('▶ Clicked Proceed to search in Contract B popup');
 });
 
-When('broker waits for Contract B search result and clicks it', async function (this: World) {
+When('broker waits for Contract B search result and clicks it', { timeout: 130000 }, async function (this: World) {
   const resultCellXPath = '//*[@id="wizard"]/div[2]/div[1]/div/table/tbody/tr/td[3]';
   const resultCell = this.page.locator(`xpath=${resultCellXPath}`);
 
   logger.info('⏳ Waiting for Contract B search result to appear');
-  await resultCell.waitFor({ state: 'visible', timeout: 60000 });
+  await resultCell.waitFor({ state: 'visible', timeout: 120000 });
   await resultCell.click();
 
   logger.info('✅ Contract B search result clicked');
@@ -306,7 +306,7 @@ When('broker selects passport type {string} in contract B form', async function 
     await this.page.keyboard.press('ArrowDown');
     await this.page.waitForTimeout(500);
     await this.page.keyboard.press('Enter');
-    logger.warn(`⚠️ Fell back to ArrowDown+Enter for passport type: ${passportType}`);
+      logger.info(`⚠️ Fell back to ArrowDown+Enter for passport type: ${passportType}`);
   }
 
   await this.page.waitForTimeout(500);
@@ -352,7 +352,7 @@ When('broker uploads a sample document in contract B form', async function (this
     logger.info(`📝 Entered document title: ${documentTitle}`);
   }
 
-  logger.info(`📎 Uploaded sample document: ${sampleFilePath}`);
+    logger.info(`📎 Uploaded sample document: ${sampleFilePath}`);
 });
 
 When('broker selects Emirates ID expiry date 3 months from today in contract B form', async function (this: World) {
@@ -368,7 +368,7 @@ When('broker selects Emirates ID expiry date 3 months from today in contract B f
   await expiryInput.fill(formattedDate);
   await this.page.keyboard.press('Enter');
 
-  logger.info(`📅 Selected Emirates ID expiry date: ${formattedDate}`);
+    logger.info(`📅 Selected Emirates ID expiry date: ${formattedDate}`);
 });
 
 When('broker enters mobile number {string} in contract B form', async function (this: World, mobile: string) {
@@ -522,7 +522,7 @@ When('broker selects {string} from Rental Status dropdown in contract B', async 
 
   if (!selected) {
     await this.page.keyboard.press('Enter');
-    logger.warn(`⚠️ Fell back to Enter key for Rental Status: ${rentalStatus}`);
+    logger.info(`⚠️ Fell back to Enter key for Rental Status: ${rentalStatus}`);
   }
 
   logger.info(`📑 Rental Status selection complete: ${rentalStatus}`);

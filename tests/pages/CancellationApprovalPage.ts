@@ -1,24 +1,52 @@
 // tests/pages/CancellationApprovalPage.ts
-import { Page } from 'playwright';
+import { Locator, Page } from 'playwright';
 import { logger } from '../utils/logger';
 import { waitForPageStable } from '../utils/waitHelper';
 
 export class CancellationApprovalPage {
   constructor(private page: Page) {}
 
+  private async waitForBlockingOverlaysToDisappear(timeout: number = 10000): Promise<void> {
+    const overlay = this.page.locator('.overlayy, .modal-backdrop, .blockUI, .loading, .spinner, .spinner-border').first();
+    await overlay.waitFor({ state: 'hidden', timeout }).catch(() => {});
+  }
+
+  private async safeClick(locator: Locator, label: string, timeout: number = 30000): Promise<void> {
+    await locator.waitFor({ state: 'visible', timeout });
+    await locator.scrollIntoViewIfNeeded().catch(() => {});
+    await this.waitForBlockingOverlaysToDisappear(Math.min(timeout, 10000));
+
+    try {
+      await locator.click({ timeout: 5000 });
+      return;
+    } catch (error) {
+      logger.info(`⚠️ Normal click failed for ${label}, trying force click`);
+    }
+
+    try {
+      await locator.click({ force: true, timeout: 5000, noWaitAfter: true });
+      return;
+    } catch (error) {
+      logger.info(`⚠️ Force click failed for ${label}, trying DOM click`);
+    }
+
+    await locator.evaluate((element: Element) => {
+      (element as HTMLElement).click();
+    });
+  }
+
   // OTP verification flow for cancellation approval
   async handleOTPVerification(contractNumber?: string): Promise<void> {
     logger.info('🔘 Looking for verify button');
-    const verifyButtonXPath = '//*[@id="Verify"]';
-    const verifyButton = this.page.locator(`xpath=${verifyButtonXPath}`);
-    await verifyButton.waitFor({ state: 'visible', timeout: 30000 });
-    await verifyButton.click();
+    const verifyButton = this.page
+      .locator('#Verify, [id="Verify"], #GetToken, [id="GetToken"], button:has-text("Verify"), button:has-text("Get Token")')
+      .first();
+    await this.safeClick(verifyButton, 'cancellation verify button', 30000);
     logger.info('✅ Verify button clicked');
     
     // Wait for OTP field
     logger.info('⏳ Waiting for OTP field to appear');
-    const otpFieldXPath = '//*[@id="TokenNumber"]';
-    const otpField = this.page.locator(`xpath=${otpFieldXPath}`);
+    const otpField = this.page.locator('#TokenNumber, [id="TokenNumber"]').first();
     await otpField.waitFor({ state: 'visible', timeout: 30000 });
     logger.info('✅ OTP field appeared');
     
@@ -32,8 +60,7 @@ export class CancellationApprovalPage {
     
     // Click verify button again to verify OTP
     logger.info('🔘 Clicking Verify button to verify OTP');
-    await verifyButton.waitFor({ state: 'visible', timeout: 10000 });
-    await verifyButton.click();
+    await this.safeClick(verifyButton, 'cancellation post-OTP verify button', 10000);
     logger.info('✅ OTP verification clicked');
     await waitForPageStable(this.page, 15000);
     logger.info('⏳ Cancellation approval page loaded');
@@ -67,14 +94,38 @@ export class CancellationApprovalPage {
     const currentUrl = this.page.url();
     logger.debug(`Current URL: ${currentUrl}`);
     
-    // Use specific selector for the Yes button (not No button)
-    const submitButton = this.page.getByRole('button', { name: 'Yes / نعم' });
-    
-    logger.info('🔍 Waiting for Yes button to be visible');
-    await submitButton.waitFor({ state: 'visible', timeout: 20000 });
-    logger.info('✅ Yes button is visible, clicking now');
-    
-    await submitButton.click();
+    const successAlreadyVisible = await this.page
+      .getByText(/Contract cancelation has been done successfully|لقد تم إلغاء العقد بنجاح/i)
+      .first()
+      .isVisible()
+      .catch(() => false);
+
+    if (successAlreadyVisible) {
+      logger.info('ℹ️ Cancellation success message already visible, submit action not required');
+      return;
+    }
+
+    const candidates = [
+      { name: 'accept button', locator: this.page.getByRole('button', { name: /Accept|قبول/i }).first() },
+      { name: 'submit button', locator: this.page.getByRole('button', { name: /Submit|إرسال|Confirm|Approve/i }).first() },
+      { name: 'generic submit input', locator: this.page.locator('button[type="submit"], input[type="submit"], #Submit, #submit').first() },
+      { name: 'yes confirmation button', locator: this.page.locator('#yes, button:has-text("Yes / نعم"), button:has-text("Yes")').first() },
+    ];
+
+    let clicked = false;
+    for (const candidate of candidates) {
+      const visible = await candidate.locator.isVisible({ timeout: 6000 }).catch(() => false);
+      if (!visible) continue;
+
+      logger.info(`✅ Found ${candidate.name}, clicking now`);
+      await this.safeClick(candidate.locator, candidate.name, 10000);
+      clicked = true;
+      break;
+    }
+
+    if (!clicked) {
+      throw new Error(`Unable to find cancellation submit button on page: ${currentUrl}`);
+    }
     
     logger.info('✅ Submit button clicked for cancellation');
   }
@@ -84,14 +135,13 @@ export class CancellationApprovalPage {
     logger.info('⏳ Waiting for confirmation popup to appear');
     
     // Try to find the popup - if it doesn't appear, the success message might be shown directly
-    const yesButtonXPath = '/html/body/div[4]/div[3]/div/button[1]';
-    const yesButton = this.page.locator(`xpath=${yesButtonXPath}`);
+    const yesButton = this.page.locator('#yes, button:has-text("Yes / نعم"), button:has-text("Yes")').first();
     
     try {
       // Wait for button with shorter timeout
       await yesButton.waitFor({ state: 'visible', timeout: 5000 });
       logger.info('👍 Confirmation popup appeared, clicking Yes button');
-      await yesButton.click();
+      await this.safeClick(yesButton, 'cancellation confirmation Yes button', 5000);
       logger.info('✅ Confirmation accepted');
     } catch (e) {
       logger.info('⚠️ No popup found - success message may appear directly');
@@ -99,8 +149,7 @@ export class CancellationApprovalPage {
     
     // Wait for success message to appear
     logger.info('⏳ Waiting for success message to appear');
-    const successMessageXPath = '/html/body/div[3]/div/div/div/h4[contains(text(), "Contract cancelation has been done successfully") or contains(text(), "لقد تم إلغاء العقد بنجاح")]';
-    const successMessage = this.page.locator(`xpath=${successMessageXPath}`);
+    const successMessage = this.page.getByText(/Contract cancelation has been done successfully|لقد تم إلغاء العقد بنجاح/i).first();
     await successMessage.waitFor({ state: 'visible', timeout: timeout });
     logger.info('✅ Cancellation approval completed successfully');
   }

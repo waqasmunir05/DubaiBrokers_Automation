@@ -9,11 +9,66 @@ import { logger } from '../../utils/logger';
 import * as fs from 'fs';
 import * as path from 'path';
 
+const ts = (): string => {
+  const now = new Date();
+  return `[${now.toTimeString().slice(0, 8)}]`;
+};
+
+const TAB_READY_TIMEOUT_MS = 15000;
+const TAB_STABILIZE_MS = 150;
+
 const formatDate = (date: Date): string => {
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
+};
+
+const escapeRegex = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const getOwnerValidationInput = (page: Page, fieldLabel: string) => {
+  const exactLabelRegex = new RegExp(`^${escapeRegex(fieldLabel)}$`, 'i');
+  const partialLabelRegex = new RegExp(escapeRegex(fieldLabel), 'i');
+
+  const candidates = [
+    page.getByLabel(exactLabelRegex).first(),
+    page.getByLabel(partialLabelRegex).first(),
+    page.locator(
+      `xpath=//label[contains(translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '${fieldLabel
+        .toLowerCase()
+        .replace(/'/g, "") }')]/ancestor::div[contains(@class,'form-group')][1]//input[not(@type='hidden')]`
+    ).first(),
+  ];
+
+  if (/date/i.test(fieldLabel)) {
+    candidates.push(
+      page.locator('input[placeholder="DD/MM/YYYY"]').last(),
+      page.locator('input[placeholder*="MM" i][placeholder*="YYYY" i]').last()
+    );
+  }
+
+  if (/passport/i.test(fieldLabel)) {
+    candidates.push(page.getByRole('textbox').nth(3));
+  }
+
+  return candidates;
+};
+
+const findVisibleOwnerValidationInput = async (page: Page, fieldLabel: string) => {
+  if (/^date of birth$/i.test(fieldLabel)) {
+    const dateOfBirthByXPath = page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div[5]/div/div[2]/div/div/div/div[1]/div/input').first();
+    if (await dateOfBirthByXPath.isVisible().catch(() => false)) {
+      return dateOfBirthByXPath;
+    }
+  }
+
+  for (const candidate of getOwnerValidationInput(page, fieldLabel)) {
+    if (await candidate.isVisible().catch(() => false)) {
+      return candidate;
+    }
+  }
+
+  throw new Error(`Could not find visible owner validation input for field label "${fieldLabel}"`);
 };
 
 const setDateWithCalendar = async (page: Page, inputXPath: string, date: Date, label: string) => {
@@ -55,15 +110,22 @@ const setDateWithCalendar = async (page: Page, inputXPath: string, date: Date, l
 const selectYesRadio = async (page: Page, containerXPath: string, label: string) => {
   const container = page.locator(`xpath=${containerXPath}`);
   await container.waitFor({ state: 'visible', timeout: 10000 });
+  const loadingOverlay = page.locator('div[style*="position: fixed"][style*="z-index: 100002"]').first();
+  await loadingOverlay.waitFor({ state: 'hidden', timeout: 30000 }).catch(() => {});
+  await waitForPageStable(page, 10000).catch(() => {});
 
   const yesByText = page.locator(
     `xpath=${containerXPath}//*[self::label or self::span or self::div][normalize-space()='Yes' or normalize-space()='YES']`
+  ).first();
+  const yesByArabicText = page.locator(
+    `xpath=${containerXPath}//*[self::label or self::span or self::div][normalize-space()='نعم']`
   ).first();
   const yesInput = page.locator(`xpath=${containerXPath}//input[@type="radio"]`).first();
   const yesValueInput = page.locator(
     `xpath=${containerXPath}//input[@type="radio" and (translate(@value,'YES','yes')='yes' or @value='1' or @value='true')]`
   ).first();
   const yesHelper = page.locator(`xpath=${containerXPath}//input[@type="radio"] + ins.iCheck-helper`).first();
+  const yesRoleRadio = page.getByRole('radio', { name: /yes|نعم/i }).first();
 
   const tryClick = async (locator: ReturnType<typeof page.locator>) => {
     const visible = await locator.isVisible().catch(() => false);
@@ -74,24 +136,34 @@ const selectYesRadio = async (page: Page, containerXPath: string, label: string)
     return false;
   };
 
-  if (!(await tryClick(yesByText))) {
-    if (!(await tryClick(yesValueInput))) {
-      if (!(await tryClick(yesHelper))) {
-        if (!(await tryClick(yesInput))) {
-          await container.click({ force: true });
+  const deadline = Date.now() + 25000;
+  while (Date.now() < deadline) {
+    if (!(await tryClick(yesByText))) {
+      if (!(await tryClick(yesByArabicText))) {
+        if (!(await tryClick(yesValueInput))) {
+          if (!(await tryClick(yesHelper))) {
+            if (!(await tryClick(yesRoleRadio))) {
+              if (!(await tryClick(yesInput))) {
+                await container.click({ force: true }).catch(() => {});
+              }
+            }
+          }
         }
       }
     }
-  }
 
-  const radios = container.locator('input[type="radio"]');
-  const radioCount = await radios.count();
-  for (let i = 0; i < radioCount; i += 1) {
-    const radio = radios.nth(i);
-    const checked = await radio.isChecked().catch(() => false);
-    if (checked) {
-      return;
+    const radios = container.locator('input[type="radio"]');
+    const radioCount = await radios.count();
+    for (let i = 0; i < radioCount; i += 1) {
+      const radio = radios.nth(i);
+      const checked = await radio.isChecked().catch(() => false);
+      if (checked) {
+        return;
+      }
     }
+
+    await page.waitForTimeout(500);
+    await waitForPageStable(page, 5000).catch(() => {});
   }
 
   throw new Error(`Failed to select Yes for ${label}`);
@@ -186,10 +258,69 @@ Then('I should see invalid property type error message', async function (this: W
 });
 
 When('I click on {string} tab', async function (this: World, tabName: string) {
-  // Click on the tab (Contracts, Dashboard, etc.)
-  const tab = this.page.getByRole('tab', { name: tabName });
-  await tab.waitFor({ state: 'visible', timeout: 10000 });
-  await tab.click();
+  const escapedTabName = escapeRegex(tabName);
+  await this.page.bringToFront().catch(() => {});
+  const isContractsTab = /^contracts$/i.test(tabName);
+
+  if (!isContractsTab) {
+    await waitForPageStable(this.page, TAB_STABILIZE_MS).catch(() => {});
+  }
+
+  let clicked = false;
+  const tabByRole = this.page.getByRole('tab', { name: new RegExp(`^${escapedTabName}$`, 'i') }).first();
+  const linkByRole = this.page.getByRole('link', { name: new RegExp(`^${escapedTabName}$`, 'i') }).first();
+  const byHref = this.page.locator(`a[href="#/${tabName.toLowerCase()}"]`).first();
+  const byText = this.page.getByText(new RegExp(`^${escapedTabName}$`, 'i')).first();
+
+  const quickCandidates = isContractsTab
+    ? [byHref, linkByRole, tabByRole, byText]
+    : [tabByRole, linkByRole, byHref, byText];
+
+  for (const candidate of quickCandidates) {
+    const visible = await candidate.isVisible().catch(() => false);
+    if (!visible) continue;
+
+    await candidate.click({ force: true }).catch(() => {});
+    clicked = true;
+    break;
+  }
+
+  if (!clicked) {
+    await Promise.race([
+      tabByRole.waitFor({ state: 'visible', timeout: TAB_READY_TIMEOUT_MS }),
+      linkByRole.waitFor({ state: 'visible', timeout: TAB_READY_TIMEOUT_MS }),
+      byHref.waitFor({ state: 'visible', timeout: TAB_READY_TIMEOUT_MS }),
+      byText.waitFor({ state: 'visible', timeout: TAB_READY_TIMEOUT_MS }),
+    ]).catch(() => {});
+
+    if (await tabByRole.isVisible().catch(() => false)) {
+      await tabByRole.click({ force: true });
+      clicked = true;
+    } else if (await linkByRole.isVisible().catch(() => false)) {
+      await linkByRole.click({ force: true });
+      clicked = true;
+    } else if (await byHref.isVisible().catch(() => false)) {
+      await byHref.click({ force: true });
+      clicked = true;
+    } else if (await byText.isVisible().catch(() => false)) {
+      await byText.click({ force: true });
+      clicked = true;
+    }
+  }
+
+  if (!clicked) {
+    await byHref.waitFor({ state: 'visible', timeout: TAB_READY_TIMEOUT_MS });
+    await byHref.click({ force: true });
+  }
+
+  if (isContractsTab && (this as any).loginClickStartedAt) {
+    const fromLoginMs = Date.now() - Number((this as any).loginClickStartedAt);
+    const verifiedAt = Number((this as any).loginVerifiedAt || 0);
+    const afterVerifyMs = verifiedAt ? Date.now() - verifiedAt : 0;
+    logger.info(`${ts()} 📑 Clicked on "${tabName}" tab (${fromLoginMs} ms from Login click, ${afterVerifyMs} ms after login verification)`);
+    return;
+  }
+
   logger.info(`📑 Clicked on "${tabName}" tab`);
 });
 
@@ -332,6 +463,27 @@ Then('I should see passport field displayed', async function (this: World) {
   const passportField = this.page.getByRole('textbox').nth(3);
   await passportField.waitFor({ state: 'visible', timeout: 10000 });
   logger.info('✅ Passport field displayed');
+});
+
+Then('I should see {string} field displayed', async function (this: World, fieldLabel: string) {
+  const input = await findVisibleOwnerValidationInput(this.page, fieldLabel);
+  await input.waitFor({ state: 'visible', timeout: 10000 });
+  logger.info(`✅ ${fieldLabel} field displayed`);
+});
+
+When('I enter {string} value {string}', async function (this: World, fieldLabel: string, fieldValue: string) {
+  const input = await findVisibleOwnerValidationInput(this.page, fieldLabel);
+  await input.waitFor({ state: 'visible', timeout: 10000 });
+  await input.click({ force: true }).catch(() => {});
+  await input.fill(fieldValue);
+
+  if (/date/i.test(fieldLabel)) {
+    await input.press('Enter').catch(() => {});
+    await input.press('Tab').catch(() => {});
+    await input.evaluate((element) => (element as HTMLInputElement).blur()).catch(() => {});
+  }
+
+  logger.info(`📝 Entered ${fieldLabel}: ${fieldValue}`);
 });
 
 When('I click on {string} button', async function (this: World, buttonName: string) {
@@ -541,7 +693,7 @@ When('I select Contract Start date 2 days from today', async function (this: Wor
   await setDateWithCalendar(this.page, xPath, targetDate, 'Contract Start date');
   
   // Store for verification
-  (this as any).contractStartDate = targetDate.toISOString().split('T')[0];
+  (this as any).contractStartDate = formatDate(targetDate);
 });
 
 When('I select Contract End date 3 months from start date', async function (this: World) {
@@ -554,12 +706,65 @@ When('I select Contract End date 3 months from start date', async function (this
   await setDateWithCalendar(this.page, xPath, endDate, 'Contract End date');
   
   // Store for verification
-  (this as any).contractEndDate = endDate.toISOString().split('T')[0];
+  (this as any).contractEndDate = formatDate(endDate);
 });
 
-When('I select {string} from Usage dropdown', async function (this: World, usage: string) {
+When('I select {string} from Usage dropdown', { timeout: 60000 }, async function (this: World, usage: string) {
   logger.info(`🔍 Selecting Usage: ${usage}`);
-  await waitForPageStable(this.page, 10000);
+  const loadingOverlay = this.page.locator('div[style*="position: fixed"][style*="z-index: 100002"]').first();
+  await loadingOverlay.waitFor({ state: 'hidden', timeout: 60000 }).catch(() => {});
+  await waitForPageStable(this.page, 15000).catch(() => {});
+
+  const usageInputByLabel = this.page
+    .locator('xpath=//label[contains(normalize-space(),"Usage")]/ancestor::div[contains(@class,"form-group")][1]//input[starts-with(@id,"react-select-")]')
+    .first();
+
+  if (await usageInputByLabel.isVisible().catch(() => false)) {
+    logger.info('✓ Usage react-select input found via label association');
+    await usageInputByLabel.scrollIntoViewIfNeeded().catch(() => {});
+    await usageInputByLabel.click({ force: true }).catch(() => {});
+    await usageInputByLabel.fill(usage).catch(() => {});
+    await this.page.waitForTimeout(400);
+
+    const directOption = this.page.locator('[id*="react-select-"][id*="-option-"]', { hasText: usage }).first();
+    if (await directOption.isVisible().catch(() => false)) {
+      await directOption.click({ force: true });
+      logger.info(`✅ Selected Usage: ${usage} (via labeled react-select input)`);
+      return;
+    }
+
+    await usageInputByLabel.press('Enter').catch(() => {});
+    logger.info(`✅ Selected Usage: ${usage} (via labeled react-select input + Enter)`);
+    return;
+  }
+
+  const clickUsageControlByLabel = async (): Promise<boolean> => {
+    return this.page.evaluate(() => {
+      const isVisible = (element: Element | null): element is HTMLElement => {
+        if (!element || !(element instanceof HTMLElement)) return false;
+        const style = window.getComputedStyle(element);
+        return style.display !== 'none' && style.visibility !== 'hidden' && element.offsetParent !== null;
+      };
+
+      const labels = Array.from(document.querySelectorAll('label'));
+      const usageLabel = labels.find((label) => /usage/i.test((label.textContent || '').replace(/\s+/g, ' ').trim()));
+      if (!usageLabel) return false;
+
+      const formGroup = usageLabel.closest('.form-group, .control-box, .col-md-6, .col-lg-6') || usageLabel.parentElement;
+      if (!formGroup) return false;
+
+      const control = formGroup.querySelector(
+        '[role="combobox"], .css-1wy0on6, .css-1hwfws3, .css-f1jc1m-control, .css-1pahdxg-control, .Select-control, .select__control, input[id^="react-select-"]'
+      ) as HTMLElement | null;
+
+      const clickTarget = control || (formGroup.querySelector('div.form-control, div[class*="control"], input') as HTMLElement | null);
+      if (!isVisible(clickTarget)) return false;
+
+      clickTarget.scrollIntoView({ block: 'center', inline: 'nearest' });
+      clickTarget.click();
+      return true;
+    });
+  };
   
   let lastError: Error | null = null;
   
@@ -572,34 +777,76 @@ When('I select {string} from Usage dropdown', async function (this: World, usage
       dropdown = await waitForVisibleXPath(
         this.page,
         SELECTORS.propertyInformation.usageDropdownXPath,
-        8000
+        12000
       );
       logger.info('✓ Usage dropdown found via primary XPath');
     } catch (e) {
       logger.info('⚠️ Primary dropdown selector failed, trying fallbacks...');
       lastError = e as Error;
+
+      // Fallback 0: label-based xpath (more stable across UI shifts)
+      try {
+        dropdown = this.page
+          .locator('xpath=//label[contains(normalize-space(),"Usage")]/ancestor::div[contains(@class,"form-group")]//*[contains(@class,"Select") or contains(@class,"select") or @role="combobox"]')
+          .first();
+        await dropdown.waitFor({ state: 'visible', timeout: 6000 });
+        logger.info('✓ Usage dropdown found via label-based locator');
+      } catch (e0) {
+        logger.info('⚠️ Label-based locator failed, trying generic fallbacks...');
+      }
       
       // Fallback 1: look for any select element
-      try {
-        dropdown = this.page.locator('select').first();
-        await dropdown.waitFor({ state: 'visible', timeout: 3000 });
-        logger.info('✓ Usage dropdown found via select element');
-      } catch (e2) {
-        logger.info('⚠️ Select element not found, trying div-based fallback...');
-        
-        // Fallback 2: Look for divs that might be custom dropdowns
-        dropdown = this.page.locator('div[role="combobox"], div[class*="select"], div[class*="dropdown"]').first();
-        await dropdown.waitFor({ state: 'visible', timeout: 3000 });
-        logger.info('✓ Usage dropdown found via div fallback');
+      if (!dropdown) {
+        try {
+          dropdown = this.page.locator('select').first();
+          await dropdown.waitFor({ state: 'visible', timeout: 3000 });
+          logger.info('✓ Usage dropdown found via select element');
+        } catch (e2) {
+          logger.info('⚠️ Select element not found, trying div-based fallback...');
+          
+          // Fallback 2: Look for divs that might be custom dropdowns
+          dropdown = this.page.locator('div[role="combobox"], div[class*="select"], div[class*="dropdown"]').first();
+          await dropdown.waitFor({ state: 'visible', timeout: 3000 });
+          logger.info('✓ Usage dropdown found via div fallback');
+        }
       }
     }
     
     if (!dropdown) {
       throw new Error('Could not locate Usage dropdown after all attempts');
     }
+
+    await dropdown.scrollIntoViewIfNeeded().catch(() => {});
+    await this.page.waitForTimeout(250);
     
     logger.info('⏳ Clicking dropdown to open options...');
-    await dropdown.click();
+    let opened = false;
+    try {
+      await dropdown.click({ force: true });
+      opened = true;
+    } catch {
+      logger.info('⚠️ Direct click on Usage dropdown failed, trying label-based DOM click...');
+    }
+
+    if (!opened) {
+      opened = await clickUsageControlByLabel().catch(() => false);
+      if (opened) {
+        logger.info('✓ Usage dropdown opened via label-based DOM click');
+      }
+    }
+
+    if (!opened) {
+      await dropdown.evaluate((element) => (element as HTMLElement).click()).catch(() => {});
+      opened = true;
+    }
+
+    await this.page.waitForTimeout(500);
+
+    const reactSelectInput = this.page.locator('input[id^="react-select-"][id$="-input"]').last();
+    if (await reactSelectInput.isVisible().catch(() => false)) {
+      await reactSelectInput.fill(usage).catch(() => {});
+      await this.page.waitForTimeout(300);
+    }
     
     // Try to find and select the usage option
     logger.info(`🔍 Looking for "${usage}" option...`);
@@ -608,8 +855,37 @@ When('I select {string} from Usage dropdown', async function (this: World, usage
     
     if (optionCount > 0) {
       logger.info(`✓ Found "${usage}" option by text`);
-      await option.first().click();
-      logger.info(`✅ Selected Usage: ${usage}`);
+      // Use pure JS click via page.evaluate to bypass Playwright's viewport constraints
+      const clicked = await this.page.evaluate((usageText) => {
+        const options = document.querySelectorAll('[id*="react-select"][id*="option"]');
+        for (const opt of options) {
+          if ((opt as HTMLElement).innerText?.trim() === usageText) {
+            (opt as HTMLElement).click();
+            return true;
+          }
+        }
+        // Fallback: any visible div with matching text
+        const allDivs = document.querySelectorAll('div');
+        for (const div of allDivs) {
+          if (div.children.length === 0 && div.innerText?.trim() === usageText) {
+            div.click();
+            return true;
+          }
+        }
+        return false;
+      }, usage);
+      if (clicked) {
+        logger.info(`✅ Selected Usage: ${usage} (via JS evaluate)`);
+        return;
+      }
+      logger.info(`⚠️ JS evaluate click returned false, trying fallback...`);
+    }
+
+    // Try role option for react-select style controls
+    const roleOption = this.page.getByRole('option', { name: usage }).first();
+    if (await roleOption.isVisible().catch(() => false)) {
+      await roleOption.click({ force: true });
+      logger.info(`✅ Selected Usage: ${usage} (via role option)`);
       return;
     }
     
@@ -630,7 +906,7 @@ When('I select {string} from Usage dropdown', async function (this: World, usage
     
     if (partialCount > 0) {
       logger.info(`✓ Found "${usage}" via partial match`);
-      await partialOption.first().click();
+      await partialOption.first().click({ force: true });
       logger.info(`✅ Selected Usage: ${usage}`);
       return;
     }
@@ -833,13 +1109,26 @@ Then('I should see success message Your contract has been submitted successfully
   if (contractNumber) {
     const trimmedNumber = contractNumber.trim();
     (this as any).contractNumber = trimmedNumber;
-    
-    // Save contract number to file for cross-scenario access
+    (this as any).contractANumber = trimmedNumber;
+
+    // Merge with existing data and save typed key
     const contractFilePath = path.join(process.cwd(), 'contract-data.json');
-    fs.writeFileSync(contractFilePath, JSON.stringify({ contractNumber: trimmedNumber }, null, 2));
+    let existingData: Record<string, unknown> = {};
+    if (fs.existsSync(contractFilePath)) {
+      try { existingData = JSON.parse(fs.readFileSync(contractFilePath, 'utf-8')); } catch { existingData = {}; }
+    }
+    const updatedData = {
+      ...existingData,
+      contractANumber: trimmedNumber,
+      contractNumber: trimmedNumber,
+      contractStartDate: String((this as any).contractStartDate || '').trim() || existingData.contractStartDate,
+      contractEndDate: String((this as any).contractEndDate || '').trim() || existingData.contractEndDate,
+      lastUpdatedAt: new Date().toISOString()
+    };
+    fs.writeFileSync(contractFilePath, JSON.stringify(updatedData, null, 2));
     logger.info('🔢 CONTRACT NUMBER SAVED: ' + trimmedNumber);
     logger.info('📄 Contract data saved to: ' + contractFilePath);
-    
+
     // Verify file was written
     if (fs.existsSync(contractFilePath)) {
       logger.info('✅ File verified - contract data persisted');

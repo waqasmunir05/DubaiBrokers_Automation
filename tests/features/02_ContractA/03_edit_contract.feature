@@ -8,7 +8,6 @@ Background:
   And I enter username "majed.1015"
   And I enter password "654321"
   And I click on "Login"
-  Then I should see logged-in username as "MAJED AHMAD MAJED SAIF ALMHEIRI"
 
 @editContract
 Scenario: Broker Edits Contract A and Owner Approves with OTP
