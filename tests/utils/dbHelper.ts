@@ -1,4 +1,4 @@
-import oracledb from 'oracledb';
+import oracledb, { Connection, Result } from 'oracledb';
 
 interface DBConfig {
   user: string;
@@ -7,13 +7,13 @@ interface DBConfig {
 }
 
 export class DatabaseHelper {
-  private static connection: oracledb.Connection | null = null;
+  private static connection: Connection | null = null;
 
   /**
    * Initialize database connection
    * Using DLD database credentials
    */
-  static async connect(): Promise<oracledb.Connection> {
+  static async connect(): Promise<Connection> {
     if (this.connection) {
       return this.connection;
     }
@@ -44,7 +44,7 @@ export class DatabaseHelper {
     sql: string,
     params: any[] = [],
     autoCommit: boolean = true
-  ): Promise<oracledb.Result<any>> {
+  ): Promise<Result<any>> {
     const connection = await this.connect();
 
     try {
@@ -60,33 +60,69 @@ export class DatabaseHelper {
 
   /**
    * Reset contract status for testing
-   * Cancels existing approved contract (status 2→3) to free up certificate for new contract creation
+   * Cancels any active Contract A row for the certificate/year to free it for a new create flow.
+   * Property type is intentionally not filtered here because Land and Unit use different IDs
+   * and the create flow is keyed by certificate/year dataset.
    */
   static async resetContractStatus(
     certificateNumber: string,
     certificateYear: string,
-    propertyTypeId: number = 3
+    _propertyTypeId: number = 3
   ): Promise<void> {
     const sql = `
       UPDATE ERES_USC_N.Contract
       SET CONTRACT_STATUS_ID = 3
       WHERE Certificate_number = :certNum
         AND Certificate_year = :certYear
-        AND property_type_id = :propType
-        AND CONTRACT_STATUS_ID = 2
+        AND CONTRACT_TYPE_ID = 1
+        AND CONTRACT_STATUS_ID <> 3
     `;
 
-    const params = [certificateNumber, certificateYear, propertyTypeId];
+    const params = [certificateNumber, certificateYear];
 
     try {
       const result = await this.executeQuery(sql, params, true);
       if (result.rowsAffected && result.rowsAffected > 0) {
-        console.log(`🔄 Contract status reset for certificate ${certificateNumber}/${certificateYear}`);
+        console.log(`🔄 Contract A status reset for certificate ${certificateNumber}/${certificateYear}`);
       } else {
-        console.log(`⚠️ No contracts found to reset (already reset or doesn't exist)`);
+        console.log(`⚠️ No active Contract A rows found to reset for ${certificateNumber}/${certificateYear}`);
       }
     } catch (error) {
       console.error(`❌ Failed to reset contract status:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Reset active Contract F records for testing
+   * Cancels non-cancelled Contract F rows to free the certificate for a new Contract F creation
+   */
+  static async resetContractFStatus(
+    certificateNumber: string,
+    certificateYear: string,
+    _propertyTypeId: number = 3,
+    contractTypeId: number = 3
+  ): Promise<void> {
+    const sql = `
+      UPDATE ERES_USC_N.Contract
+      SET CONTRACT_STATUS_ID = 3
+      WHERE CERTIFICATE_NUMBER = :certNum
+        AND CERTIFICATE_YEAR = :certYear
+        AND CONTRACT_TYPE_ID = :contractTypeId
+        AND CONTRACT_STATUS_ID <> 3
+    `;
+
+    const params = [certificateNumber, certificateYear, contractTypeId];
+
+    try {
+      const result = await this.executeQuery(sql, params, true);
+      if (result.rowsAffected && result.rowsAffected > 0) {
+        console.log(`🔄 Contract F status reset for certificate ${certificateNumber}/${certificateYear}`);
+      } else {
+        console.log(`⚠️ No active Contract F rows found to reset for ${certificateNumber}/${certificateYear}`);
+      }
+    } catch (error) {
+      console.error(`❌ Failed to reset Contract F status:`, error);
       throw error;
     }
   }

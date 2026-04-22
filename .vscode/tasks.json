@@ -1963,6 +1963,1974 @@
 			"label": "git-commit-tasks-then-merge",
 			"type": "shell",
 			"command": "git add .vscode/tasks.json && git commit -m \"chore: update VS Code tasks after lifecycle runs\" && git checkout feat/full-automation-baseline && git merge feat/create-contract-b --no-ff -m \"Merge feat/create-contract-b: Contract B full lifecycle (create, approve, cancel, approve-cancel)\" && git log --oneline -8 && echo MERGE_DONE"
+		},
+		{
+			"label": "run-contract-f-prepare-flow",
+			"type": "shell",
+			"command": "tests\\utils\\run-cucumber-task.cmd cucumber-js tests/features/05_ContractF/01_create_contract_f.feature --tags \"@prepareContractF\" --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_prepare.json",
+			"isBackground": false
+		},
+		{
+			"label": "run-contract-f-prepare-log",
+			"type": "shell",
+			"command": "cmd /d /c \"tests\\utils\\run-cucumber-task.cmd cucumber-js tests/features/05_ContractF/01_create_contract_f.feature --tags @prepareContractF --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_prepare.json > reports/contract_f_prepare_run.log 2>&1\"",
+			"isBackground": false
+		},
+		{
+			"label": "rerun-contract-f-prepare-log",
+			"type": "shell",
+			"command": "cmd /d /c \"tests\\utils\\run-cucumber-task.cmd cucumber-js tests/features/05_ContractF/01_create_contract_f.feature --tags @prepareContractF --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_prepare.json > reports/contract_f_prepare_run.log 2>&1\"",
+			"isBackground": false
+		},
+		{
+			"label": "rerun-contract-f-prepare-log-2",
+			"type": "shell",
+			"command": "cmd /d /c \"tests\\utils\\run-cucumber-task.cmd cucumber-js tests/features/05_ContractF/01_create_contract_f.feature --tags @prepareContractF --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_prepare_rerun.json > reports/contract_f_prepare_rerun.log 2>&1\"",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-rerun-usage-fix",
+			"type": "shell",
+			"command": "cmd /d /c \"tests\\utils\\run-cucumber-task.cmd cucumber-js tests/features/05_ContractF/01_create_contract_f.feature --tags @prepareContractF --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_prepare_rerun2.json > reports/contract_f_prepare_rerun2.log 2>&1\"",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-rerun-b-result-fix",
+			"type": "shell",
+			"command": "cmd /d /c \"tests\\utils\\run-cucumber-task.cmd cucumber-js tests/features/05_ContractF/01_create_contract_f.feature --tags @prepareContractF --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_prepare_rerun3.json > reports/contract_f_prepare_rerun3.log 2>&1\"",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-rerun-final",
+			"type": "shell",
+			"command": "cmd /d /c \"tests\\utils\\run-cucumber-task.cmd cucumber-js tests/features/05_ContractF/01_create_contract_f.feature --tags @prepareContractF --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_prepare_final.json > reports/contract_f_prepare_final.log 2>&1\"",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-rerun-greenlist-fix",
+			"type": "shell",
+			"command": "cmd /d /c \"tests\\utils\\run-cucumber-task.cmd cucumber-js tests/features/05_ContractF/01_create_contract_f.feature --tags @prepareContractF --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_prepare_rerun4.json > reports/contract_f_prepare_rerun4.log 2>&1\"",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-now",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_now.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-now",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_now.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun-2",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun2.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun-3",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun3.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun-4",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun4.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun-5",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun5.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun-5",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun5.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun-5",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun5.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun-6",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun6.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-create-f-observe-rerun-7",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_createf_observe_rerun7.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-financial-observe-rerun-1",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_financial_observe_rerun1.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-financial-observe-rerun-2",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_financial_observe_rerun2.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-financial-observe-rerun-3",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_financial_observe_rerun3.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-prepare-financial-observe-rerun-4",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--tags",
+				"@prepareContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_prepare_financial_observe_rerun4.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-run",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-payment-plan-run",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_payment_plan.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-payment-plan-run-2",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_payment_plan2.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-rerun-now",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_rerun.json",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-contractinfo",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_contractinfo.json",
+			"isBackground": false
+		},
+		{
+			"label": "wait-for-bank-contractinfo-report",
+			"type": "shell",
+			"command": "powershell -Command \"$i=0; while (-not (Test-Path 'reports/cucumber_contract_f_from_search_bank_contractinfo.json') -and $i -lt 60) { Start-Sleep 5; $i++ }; if (Test-Path 'reports/cucumber_contract_f_from_search_bank_contractinfo.json') { Write-Host 'Report ready'; Get-Content 'reports/cucumber_contract_f_from_search_bank_contractinfo.json' | Select-String -Pattern 'failed|passed|error' | Select-Object -Last 20 } else { Write-Host 'Timeout waiting for report' }\"",
+			"isBackground": false
+		},
+		{
+			"label": "fix-bank-step-inline",
+			"type": "shell",
+			"command": "powershell -Command \"$file = 'tests\\\\steps\\\\ContractF\\\\create_contract_f.steps.ts'; $content = Get-Content $file -Raw; $old = @'\\nWhen('broker selects Abu Dhabi Islamic Bank as bank name on Contract F payment plan page', { timeout: 120000 }, async function (this: World) {\\n  const contractFPage = new ContractFPage(this.page);\\n  await contractFPage.selectBankNameAbuDhabiIslamicBank();\\n});\\n'@; $new = @'\\nWhen('broker selects Abu Dhabi Islamic Bank as bank name on Contract F payment plan page', { timeout: 120000 }, async function (this: World) {\\n  const bankDropdown = this.page.locator('xpath=/html/body/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div[3]/div/div/div[3]/div/div[2]/div/div/div/div/div[1]').first();\\n  await bankDropdown.waitFor({ state: 'visible', timeout: 30000 });\\n  await bankDropdown.click({ force: true });\\n  await this.page.waitForTimeout(500);\\n  const opts = this.page.locator('ng-option');\\n  const cnt = await opts.count();\\n  for (let i = 0; i < cnt; i++) {\\n    const o = opts.nth(i);\\n    const txt = await o.textContent();\\n    if (txt && txt.toLowerCase().includes('abu') && txt.toLowerCase().includes('dhabi')) {\\n      await o.click({ force: true });\\n      logger.info('Selected Abu Dhabi Islamic Bank');\\n      return;\\n    }\\n  }\\n  throw new Error('Bank not found');\\n});\\n'@; $content.Replace($old, $new) | Set-Content $file\"",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun.json",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun-2",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun2.json",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-log",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_log.json > reports/contract_f_from_search_bank_enter.log 2>&1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun-3",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun3.json",
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun-4",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun4.json > reports/contract_f_from_search_bank_enter_rerun4.log 2>&1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun-5",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun5.json > reports/contract_f_from_search_bank_enter_rerun5.log 2>&1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun-6",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun6.json > reports/contract_f_from_search_bank_enter_rerun6.log 2>&1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun-7",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun7.json & echo __TASK_DONE__"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun-8",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun8.json > reports/contract_f_from_search_bank_enter_rerun8.log 2>&1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-enter-rerun-9",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_bank_enter_rerun9.json > reports/contract_f_from_search_bank_enter_rerun9.log 2>&1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "contract-f-from-search-bank-fixed",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_bank_fixed.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-bank-fixed-rerun",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_bank_fixed_rerun.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-contractinfo-commission-observe",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_contractinfo_commission_observe.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-seller-slider-100",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_seller_slider_100.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-seller-slider-100-verified",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_seller_slider_100_verified.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-seller-slider-100-verified-log",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_seller_slider_100_verified.json > reports/contract_f_from_search_seller_slider_100_verified.log 2>&1"
+			]
+		},
+		{
+			"label": "contract-f-from-search-seller-slider-execute-now",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_seller_slider_execute_now.json > reports/contract_f_from_search_seller_slider_execute_now.log 2>&1"
+			]
+		},
+		{
+			"label": "contract-f-from-search-run-final-now",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_run_final_now.json > reports/contract_f_from_search_run_final_now.log 2>&1"
+			]
+		},
+		{
+			"label": "contract-f-from-search-execute-current",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_execute_current.json > reports/contract_f_from_search_execute_current.log 2>&1"
+			]
+		},
+		{
+			"label": "contract-f-from-search-seller-slider-100-fixed",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/d",
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/02_create_contract_f_from_search.feature --tags @fromSearch --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/cucumber_contract_f_from_search_seller_slider_100_fixed.json > reports/contract_f_from_search_seller_slider_100_fixed.log 2>&1"
+			]
+		},
+		{
+			"label": "contract-f-from-search-seller-slider-100-fixed-direct",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_seller_slider_100_fixed_direct.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-dld-fees-run",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_dld_fees_run.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-dld-fees-run-now",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_dld_fees_run_now.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-dld-fees-run-now-2",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_dld_fees_run_now_2.json"
+			]
+		},
+		{
+			"label": "contract-f-from-search-dld-fees-run-now-3",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/02_create_contract_f_from_search.feature",
+				"--tags",
+				"@fromSearch",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_from_search_dld_fees_run_now_3.json"
+			]
+		},
+		{
+			"label": "contract-f-approve-only",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/03_approve_contract_f.feature",
+				"--tags",
+				"@approveContractF",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_contract_f_approve_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-login-cases-only",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/01_Login/*.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_login_only.json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "login-suite-only",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:login"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-login-tests",
+			"type": "shell",
+			"command": "npm run test:login",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-login-tests",
+			"type": "shell",
+			"command": "npm run test:login",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-login-tests-log",
+			"type": "shell",
+			"command": "npm run test:login > reports/login-run.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-emirates-id-only",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Emirates ID\"",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-emirates-id-only-observe",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Emirates ID\"",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-mobile-only",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Mobile Number\"",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-mobile-only",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Mobile Number\"",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-mobile-only-log",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Mobile Number\" > reports/mobile-run.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-mobile-only-log-2",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Mobile Number\" > reports/mobile-run.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-mobile-only-explicit-otp",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Mobile Number\"",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-mobile-only-verify-otp",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Mobile Number\"",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-mobile-only-otp-fix",
+			"type": "shell",
+			"command": "node tests/utils/run-cucumber-with-summary.js --profile loginOnly --name \"User logs in with Mobile Number\" > reports/mobile-run-otp-fix.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-test-mobile-script",
+			"type": "shell",
+			"command": "npm run test:mobile > reports/mobile-script-run.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-test-mobile-foreground",
+			"type": "shell",
+			"command": "npm run test:mobile",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-test-mobile-after-otp-visibility-fix",
+			"type": "shell",
+			"command": "npm run test:mobile > reports/mobile-run-visibility-fix.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-mobile-only-after-otp-click-fix",
+			"type": "shell",
+			"command": "npm run test:mobile > reports/mobile-run-after-otp-click-fix.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractf-direct",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-direct.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "inspect-contract-table-columns",
+			"type": "shell",
+			"command": "node -e \"const oracledb=require('oracledb'); (async()=>{const conn=await oracledb.getConnection({user:process.env.DB_USER||'ERES_USC_N',password:process.env.DB_PASSWORD||'eres_usc_n_stgrac',connectString:process.env.DB_CONNECT_STRING||'eres-stg-scan.eres.ae:1521/STGRAC'}); const r=await conn.execute(\\\"select column_name from all_tab_columns where owner = 'ERES_USC_N' and table_name = 'CONTRACT' order by column_id\\\"); console.log((r.rows||[]).map(x=>x[0]).join('\\n')); await conn.close();})().catch(e=>{console.error(e); process.exit(1);});\" > reports/contract-columns.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "inspect-active-contractf-records",
+			"type": "shell",
+			"command": "node -e \"const oracledb=require('oracledb'); (async()=>{const conn=await oracledb.getConnection({user:process.env.DB_USER||'ERES_USC_N',password:process.env.DB_PASSWORD||'eres_usc_n_stgrac',connectString:process.env.DB_CONNECT_STRING||'eres-stg-scan.eres.ae:1521/STGRAC'}); const sql=\\\"select CONTRACT_NUMBER, CONTRACT_STATUS_ID, CONTRACT_TYPE_ID, CERTIFICATE_NUMBER, CERTIFICATE_YEAR, CONTRACT_A_ID, CONTRACT_B_ID, CREATED_DATE from ERES_USC_N.CONTRACT where (CERTIFICATE_NUMBER = '18327' and CERTIFICATE_YEAR = '2019') or CONTRACT_NUMBER = 'CF202604011354' order by CREATED_DATE desc\\\"; const r=await conn.execute(sql); console.log(JSON.stringify(r.rows,null,2)); await conn.close();})().catch(e=>{console.error(e); process.exit(1);});\" > reports/contractf-records.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractf-direct-after-reset",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-direct-after-reset.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractf-create-approve",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-direct-run.log 2>&1",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractf-fresh-now",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-fresh.log 2>&1",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "run-contractf-full-flow",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-full-flow.log 2>&1 ; Get-Content reports/contractf-full-flow.log -Tail 30",
+			"isBackground": false
+		},
+		{
+			"label": "run-contractf-full-flow-v2",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-full-flow.log 2>&1",
+			"isBackground": true
+		},
+		{
+			"label": "run-contractf-v3",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v3.log 2>&1",
+			"isBackground": true
+		},
+		{
+			"label": "run-contractf-v4",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v4.log 2>&1",
+			"isBackground": true
+		},
+		{
+			"label": "run-contractf-v5",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v5.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v6",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v6.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v7",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v7.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v8",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v8.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v7",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v7.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v7",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v7.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v8",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v8.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v8",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v8.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v9",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v9.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v10",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v10.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v11",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v11.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v12",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v12.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v10",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v10.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v11",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v11.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v12",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v12.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v13",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v13.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v14",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v14.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v15",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v15.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v16",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v16.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v17",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v17.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v18",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v18.log 2>&1"
+		},
+		{
+			"label": "run-contractf-v19",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v19.log 2>&1"
+		},
+		{
+			"label": "git-stage-contractf-source-only",
+			"type": "shell",
+			"command": "git add tests/features/05_ContractF/01_create_contract_f.feature tests/features/05_ContractF/02_create_contract_f_from_search.feature tests/features/05_ContractF/03_approve_contract_f.feature tests/steps/ContractF/create_contract_f.steps.ts tests/steps/ContractF/approve_contract_f.steps.ts tests/pages/ContractFPage.ts tests/resources/uploads/sample-image.png tests/resources/uploads/sample-photo.jpg"
+		},
+		{
+			"label": "git-status-short-after-stage",
+			"type": "shell",
+			"command": "git status --short"
+		},
+		{
+			"label": "git-cached-names",
+			"type": "shell",
+			"command": "git diff --cached --name-only"
+		},
+		{
+			"label": "git-commit-contractf-flow",
+			"type": "shell",
+			"command": "git commit -m \"feat(contract-f): complete create/approve/upload/activate flow\""
+		},
+		{
+			"label": "git-push-contractf",
+			"type": "shell",
+			"command": "git push origin feat/contract-f"
+		},
+		{
+			"label": "git-last-commit",
+			"type": "shell",
+			"command": "git rev-parse --short HEAD"
+		},
+		{
+			"label": "run-contractf-v20",
+			"type": "shell",
+			"command": "npm run test:contractf > reports/contractf-run-v20.log 2>&1"
+		},
+		{
+			"label": "contract-f-stability-check",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"--profile",
+				"contractF_direct"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "review-diff-vs-baseline",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"diff",
+				"--name-only",
+				"feat/full-automation-baseline...feat/contract-f"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-validate-after-review",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"--profile",
+				"contractF_direct"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-create-unit-land-run",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": true,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-run-after-fixes",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"--profile",
+				"contractF_direct"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-a-create-outline",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/contracta_create_outline.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contract-f-create-and-approve-only",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"tests/features/05_ContractF/03_approve_contract_f.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/contractf_create_approve_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-create-approve-now",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"tests/features/05_ContractF/03_approve_contract_f.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/contractf_create_approve_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-create-approve-log-now",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/01_create_contract_f.feature tests/features/05_ContractF/03_approve_contract_f.feature --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/contractf_create_approve_only.json > reports/contractf_create_approve_run.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-create-approve-only-clean",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/01_create_contract_f.feature tests/features/05_ContractF/03_approve_contract_f.feature --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/contractf_create_approve_only.json > reports/contractf_create_approve_only_clean.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-only-after-reset-fix",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/01_create_contract_f.feature tests/features/05_ContractF/03_approve_contract_f.feature --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/contractf_create_approve_only.json > reports/contractf_only_after_reset_fix.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-only-rerun-now",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"node tests/utils/run-cucumber-with-summary.js tests/features/05_ContractF/01_create_contract_f.feature tests/features/05_ContractF/03_approve_contract_f.feature --require-module ts-node/register --require tests/steps/**/*.ts --require tests/support/world.ts --require tests/support/hooks.ts --format progress --format json:reports/contractf_create_approve_only.json > reports/contractf_only_rerun.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-only-rerun-visible",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"tests/features/05_ContractF/03_approve_contract_f.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/contractf_create_approve_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-create-only-visible",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/contractf_create_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-create-and-approve-visible",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/05_ContractF/01_create_contract_f.feature",
+				"tests/features/05_ContractF/03_approve_contract_f.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/contractf_create_approve_only.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-both-visible",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractf:both"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "login-suite-visible",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:login"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contracta-all-visible",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:all"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "verify-contracta-all",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:all"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "verify-contracta-land-rerun",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"npm run test:contracta:land > reports\\contracta_land_rerun.log 2>&1"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contracta-land-visible",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:land"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contracta-unit-create-verify-checkbox-fix",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:unit:create"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contracta-unit-create-verify-submit-fix",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:unit:create"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-land-rerun-focused",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/01_Login/02_username.feature",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"tests/features/02_ContractA/03_edit_contract.feature",
+				"tests/features/02_ContractA/04_approve_edited_contract.feature",
+				"tests/features/02_ContractA/05_extend_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_report.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-land-create-approve-rerun",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"tests/utils/run-cucumber-with-summary.js",
+				"tests/features/01_Login/02_username.feature",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress",
+				"--format",
+				"json:reports/cucumber_report.json"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-create-approve-only",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"node_modules/@cucumber/cucumber/bin/cucumber-js",
+				"tests/features/01_Login/02_username.feature",
+				"tests/features/02_ContractA/01_create_contract.feature",
+				"tests/features/02_ContractA/02_approve_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-create-approve-focused",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:create-approve"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-create-approve-check",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:create-approve"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-create-approve-final-check",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:create-approve"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-create-approve-date-check",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:create-approve"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-create-approve-date-rerun",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:create-approve"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-edit-approve-check",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"node_modules/@cucumber/cucumber/bin/cucumber-js",
+				"--profile",
+				"explicitPaths",
+				"tests/features/02_ContractA/03_edit_contract.feature",
+				"tests/features/02_ContractA/04_approve_edited_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-extend-check",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"node_modules/@cucumber/cucumber/bin/cucumber-js",
+				"--profile",
+				"explicitPaths",
+				"tests/features/02_ContractA/05_extend_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-extend-rerun-15s-tab",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"node_modules/@cucumber/cucumber/bin/cucumber-js",
+				"--profile",
+				"explicitPaths",
+				"tests/features/02_ContractA/05_extend_contract.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-approve-extension-check",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"node_modules/@cucumber/cucumber/bin/cucumber-js",
+				"--profile",
+				"explicitPaths",
+				"tests/features/02_ContractA/06_approve_extension.feature",
+				"--require-module",
+				"ts-node/register",
+				"--require",
+				"tests/steps/**/*.ts",
+				"--require",
+				"tests/support/world.ts",
+				"--require",
+				"tests/support/hooks.ts",
+				"--format",
+				"progress"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-a-full-unit-lifecycle",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contracta:unit:lifecycle"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-full-all",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractf:all"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-both-rerun",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractf:both"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-both-explicit-rerun",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractf:both"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "contract-f-both-explicit-four-features",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"test:contractf:both"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "validate-contractf-unit-now",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:unit",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "rerun-contractf-unit-now",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:unit",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "rerun-contractf-unit-now-2",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:unit",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "rerun-contractf-unit-after-wait-bump",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:unit",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "rerun-contractf-unit-after-step-timeout-fix",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:unit",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-contractf-land-after-unit",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:land",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "rerun-contractf-unit-after-contractf-exists-fix",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:unit",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "rerun-contractf-unit-after-popup-fix",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:unit",
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "rerun-contractf-unit-latest",
+			"type": "shell",
+			"command": "npm run clean:artifacts && npm run test:contractf:unit",
+			"isBackground": false,
+			"group": "test"
 		}
 	]
 }

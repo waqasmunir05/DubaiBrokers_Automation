@@ -6,6 +6,13 @@ const { summarizeCucumberJson, reportPath } = require('./post-summary');
 const args = process.argv.slice(2);
 const cucumberBin = path.resolve(process.cwd(), 'node_modules', '@cucumber', 'cucumber', 'bin', 'cucumber-js');
 
+const hasExplicitProfile = args.some((arg) => arg === '--profile');
+const hasExplicitFeaturePaths = args.some((arg) => /\.feature$/i.test(arg));
+
+const profileArgs = hasExplicitFeaturePaths && !hasExplicitProfile
+  ? ['--profile', 'explicitPaths']
+  : [];
+
 const hasProgressFormat = args.some((arg, index) => {
   return arg === '--format' && args[index + 1] === 'progress';
 });
@@ -15,6 +22,7 @@ const formatArgs = hasProgressFormat
   : ['--format', 'progress'];
 
 const cucumberArgs = [
+  ...profileArgs,
   ...args,
   ...formatArgs,
   '--format',

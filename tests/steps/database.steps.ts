@@ -16,6 +16,13 @@ Given('I reset contract status for certificate {string} year {string}', async fu
   await DatabaseHelper.resetContractStatus(certificateNumber, certificateYear, 3);
 });
 
+Given('I reset Contract F status for certificate {string} year {string}', async function (
+  certificateNumber: string,
+  certificateYear: string
+) {
+  await DatabaseHelper.resetContractFStatus(certificateNumber, certificateYear, 3, 3);
+});
+
 /**
  * Execute custom SQL query
  * Usage: Given I execute SQL "UPDATE table SET column = value WHERE id = 1"

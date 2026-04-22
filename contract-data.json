@@ -1,5 +1,21 @@
 {
-  "contractNumber": "CB202603273934",
-  "contractBNumber": "CB202603273934",
-  "lastUpdatedAt": "2026-03-27T08:19:37.237Z"
+  "contractANumber": "CA202604093810",
+  "contractStartDate": "11/04/2026",
+  "contractEndDate": "11/07/2026",
+  "lastUpdatedAt": "2026-04-09T07:49:57.027Z",
+  "contractBNumber": "CB202604093807",
+  "contractFNumbersByDataSet": {
+    "unit-18327-2019": "CF202604094458"
+  },
+  "preparedContractFNumbersByDataSet": {
+    "unit-18327-2019": "CF202604094458"
+  },
+  "lastApprovedContractFNumbersByDataSet": {
+    "unit-18327-2019": "CF202604094458"
+  },
+  "lastCanceledContractFNumber": "CF202604094605",
+  "contractNumber": "CF202604094458",
+  "preparedContractFNumber": "CF202604094458",
+  "contractFNumber": "CF202604094458",
+  "lastApprovedContractFNumber": "CF202604094458"
 }

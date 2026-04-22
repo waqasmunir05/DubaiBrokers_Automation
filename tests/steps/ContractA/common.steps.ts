@@ -23,7 +23,13 @@ When('I enter the created contract number', async function (this: World) {
       const fileData = fs.readFileSync(contractFilePath, 'utf-8');
       logger.debug(`📄 Raw file data: ${fileData}`);
       const data = JSON.parse(fileData);
-      contractNumber = data.contractNumber;
+      const contractANumber = String(data.contractANumber || '').trim();
+      const genericContractNumber = String(data.contractNumber || '').trim();
+      contractNumber = /^CA/i.test(contractANumber)
+        ? contractANumber
+        : /^CA/i.test(genericContractNumber)
+          ? genericContractNumber
+          : contractANumber || genericContractNumber || contractNumber;
       logger.info(`📂 Contract number loaded from file: ${contractNumber}`);
     } catch (error) {
       logger.error(`⚠️ Error reading contract file, using fallback: ${error}`);
