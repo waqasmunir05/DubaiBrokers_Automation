@@ -11,6 +11,40 @@ const formatDate = (date: Date): string => {
   return `${day}/${month}/${year}`;
 };
 
+const envOrThrow = (name: string): string => {
+  const value = process.env[name]?.trim();
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+};
+
+const envFromAliases = (...names: string[]): string => {
+  for (const name of names) {
+    const value = process.env[name]?.trim();
+    if (value) {
+      return value;
+    }
+  }
+  throw new Error(`Missing required environment variable. Provide one of: ${names.join(', ')}`);
+};
+
+const maskMobile = (value: string): string => {
+  const trimmed = value.trim();
+  if (trimmed.length <= 4) return '****';
+  return `${trimmed.slice(0, 2)}${'*'.repeat(Math.max(0, trimmed.length - 5))}${trimmed.slice(-3)}`;
+};
+
+const maskEmail = (value: string): string => {
+  const trimmed = value.trim();
+  const at = trimmed.indexOf('@');
+  if (at <= 0) return '***';
+  const local = trimmed.slice(0, at);
+  const domain = trimmed.slice(at + 1);
+  const maskedLocal = local.length <= 1 ? '*' : `${local[0]}${'*'.repeat(Math.max(1, local.length - 1))}`;
+  return `${maskedLocal}@${domain}`;
+};
+
 When('broker clicks on Create Contract B', async function (this: World) {
   const createContractBXPath = '//*[@id="sidebar-menu"]/div/ul/li[3]/a';
   const createContractBLink = this.page.locator(`xpath=${createContractBXPath}`);
@@ -374,21 +408,23 @@ When('broker selects Emirates ID expiry date 3 months from today in contract B f
 When('broker enters mobile number {string} in contract B form', async function (this: World, mobile: string) {
   const mobileXPath = '//*[@id="wizard"]/div[1]/div/div[2]/div[2]/div[8]/div[2]/div/div[2]/div/div[2]/div/div/div/input';
   const mobileInput = this.page.locator(`xpath=${mobileXPath}`);
+  const resolvedMobile = mobile === '<mobileNumber>' ? envFromAliases('BUYER_MOBILE', 'TEST_MOBILE') : mobile;
 
   await mobileInput.waitFor({ state: 'visible', timeout: 15000 });
-  await mobileInput.fill(mobile);
+  await mobileInput.fill(resolvedMobile);
 
-  logger.info(`📱 Entered mobile number: ${mobile}`);
+  logger.info(`📱 Entered mobile number: ${maskMobile(resolvedMobile)}`);
 });
 
 When('broker enters email address {string} in contract B form', async function (this: World, email: string) {
   const emailXPath = '//*[@id="wizard"]/div[1]/div/div[2]/div[2]/div[8]/div[2]/div/div[3]/div/div[2]/div/div/div/input';
   const emailInput = this.page.locator(`xpath=${emailXPath}`);
+  const resolvedEmail = email === '<emailAddress>' ? envFromAliases('BUYER_EMAIL', 'TEST_EMAIL') : email;
 
   await emailInput.waitFor({ state: 'visible', timeout: 15000 });
-  await emailInput.fill(email);
+  await emailInput.fill(resolvedEmail);
 
-  logger.info(`📧 Entered email address: ${email}`);
+  logger.info(`📧 Entered email address: ${maskEmail(resolvedEmail)}`);
 });
 
 When('broker selects Buyer radio in contract B form', async function (this: World) {
@@ -445,10 +481,17 @@ When('broker clicks Save and Continue in contract B form', async function (this:
 Then('broker should see Property Information screen in contract B flow', async function (this: World) {
   const propertyInfoHeader = this.page.locator('h2').filter({ hasText: 'Property Information' }).first();
   const propertyTypeLookup = this.page.locator('xpath=//*[@id="wizard"]/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div[1]').first();
+  const usageDropdown = this.page.locator('xpath=//*[@id="wizard"]/div[1]/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]').first();
+  const saveContinueButton = this.page.locator('button.buttonNext.btn.btn-primary').first();
 
   const headerVisible = await propertyInfoHeader.isVisible({ timeout: 8000 }).catch(() => false);
   if (!headerVisible) {
-    await propertyTypeLookup.waitFor({ state: 'visible', timeout: 20000 });
+    await Promise.race([
+      propertyTypeLookup.waitFor({ state: 'visible', timeout: 20000 }),
+      usageDropdown.waitFor({ state: 'visible', timeout: 20000 }),
+      saveContinueButton.waitFor({ state: 'visible', timeout: 20000 }),
+      this.page.getByText(/property information/i).first().waitFor({ state: 'visible', timeout: 20000 })
+    ]);
   }
 
   logger.info('✅ Property Information screen is displayed in Contract B flow');

@@ -4,8 +4,8 @@ Feature: Contract F - Prepare Create Contract Flow on Unit Property
 Background:
   Given I open the DLD login page
   When I select "Username" login option
-  And I enter username "majed.1015"
-  And I enter password "654321"
+  And I enter username "<username>"
+  And I enter password "<password>"
   And I click on "Login"
   And broker uses Contract F data set key "unit-18327-2019"
   And I cancel previous approved Contract F via support API if available
@@ -81,8 +81,8 @@ Background:
   And broker selects passport expiry date 1 year from today in contract B form
   And broker selects passport type "Regular passport" in contract B form
   And broker selects Emirates ID expiry date 3 months from today in contract B form
-  And broker enters mobile number "0558895363" in contract B form
-  And broker enters email address "waqas.munir@eres.ae" in contract B form
+  And broker enters mobile number "<mobileNumber>" in contract B form
+  And broker enters email address "<emailAddress>" in contract B form
   And broker selects Buyer radio in contract B form
   And broker accepts terms checkbox in contract B form
   And broker clicks Save and Continue in contract B form

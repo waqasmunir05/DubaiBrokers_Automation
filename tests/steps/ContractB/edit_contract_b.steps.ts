@@ -12,6 +12,40 @@ const formatDate = (date: Date): string => {
   return `${day}/${month}/${year}`;
 };
 
+const envOrThrow = (name: string): string => {
+  const value = process.env[name]?.trim();
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+};
+
+const envFromAliases = (...names: string[]): string => {
+  for (const name of names) {
+    const value = process.env[name]?.trim();
+    if (value) {
+      return value;
+    }
+  }
+  throw new Error(`Missing required environment variable. Provide one of: ${names.join(', ')}`);
+};
+
+const maskMobile = (value: string): string => {
+  const trimmed = value.trim();
+  if (trimmed.length <= 4) return '****';
+  return `${trimmed.slice(0, 2)}${'*'.repeat(Math.max(0, trimmed.length - 5))}${trimmed.slice(-3)}`;
+};
+
+const maskEmail = (value: string): string => {
+  const trimmed = value.trim();
+  const at = trimmed.indexOf('@');
+  if (at <= 0) return '***';
+  const local = trimmed.slice(0, at);
+  const domain = trimmed.slice(at + 1);
+  const maskedLocal = local.length <= 1 ? '*' : `${local[0]}${'*'.repeat(Math.max(1, local.length - 1))}`;
+  return `${maskedLocal}@${domain}`;
+};
+
 When('broker clicks edit action icon in contract B', async function (this: World) {
   const detailsPage = new ContractDetailsPage(this.page);
   await detailsPage.clickEditButton();
@@ -110,8 +144,8 @@ When('broker enters same mobile and email as create contract B in edit', async f
     .locator('xpath=//*[@id="wizard"]/div[1]/div/div[2]/div[2]/div[8]/div[2]/div/div[3]/div/div[2]/div/div/div/input')
     .first();
 
-  const mobile = '0558895363';
-  const email = 'waqas.munir@eres.ae';
+  const mobile = envFromAliases('BUYER_MOBILE', 'TEST_MOBILE');
+  const email = envFromAliases('BUYER_EMAIL', 'TEST_EMAIL');
 
   await mobileInput.waitFor({ state: 'visible', timeout: 15000 });
   await mobileInput.fill(mobile);
@@ -119,8 +153,8 @@ When('broker enters same mobile and email as create contract B in edit', async f
   await emailInput.waitFor({ state: 'visible', timeout: 15000 });
   await emailInput.fill(email);
 
-  logger.info(`📱 Updated mobile in Contract B edit: ${mobile}`);
-  logger.info(`📧 Updated email in Contract B edit: ${email}`);
+  logger.info(`📱 Updated mobile in Contract B edit: ${maskMobile(mobile)}`);
+  logger.info(`📧 Updated email in Contract B edit: ${maskEmail(email)}`);
 });
 
 Then('broker should see Property Information screen in contract B edit', async function (this: World) {
